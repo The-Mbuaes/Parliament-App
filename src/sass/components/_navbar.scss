@@ -1,0 +1,311 @@
+.nav,.nav--mobile{
+    &.visible{
+    background-color: white;
+    box-shadow: 0px 1px 16px 0px rgba(0,0,0,0.07);
+    -webkit-box-shadow: 0px 1px 16px 0px rgba(0,0,0,0.07);
+    -moz-box-shadow: 0px 1px 16px 0px rgba(0,0,0,0.07);
+    color: black !important;
+    }
+    transition: all .5s;
+    ///
+    background-color: white;
+    //
+    padding: 1rem 0rem;
+    position: fixed;
+    justify-content: space-between;
+    @include respond(phone){
+    justify-content: space-between;
+    padding: 0rem 0px;
+    }
+    top: 0;
+    left:0;
+    width: 100vw;
+    z-index: 30;
+    /*
+    box-shadow: 0px 1px 16px 0px rgba(0,0,0,0.07);
+    -webkit-box-shadow: 0px 1px 16px 0px rgba(0,0,0,0.07);
+    -moz-box-shadow: 0px 1px 16px 0px rgba(0,0,0,0.07);
+    */
+    &__logo{
+        width: 5rem;
+        margin-left: 2rem;
+        @include respond(tab-port){
+            width: 10rem; 
+          }
+          @include respond(phone){
+            width: 5rem;
+            margin-left: 30px
+            // margin: 10rem !important; 
+          }
+    }
+
+    &__link{
+        transition: all .3s;
+        cursor: pointer;
+        color: black;
+        font-size: 1.6rem;
+        display: inline-block;
+        font-weight: 400;
+        text-decoration: none;
+        transition: all .6s;
+        margin-left: 0rem !important;
+        // margin-right: 0 !important;
+        &--mobile{
+            color: black !important;
+        }
+        &.visible{
+            color: $deep-blue;
+            &:hover{
+                color: $red-ish !important;
+            }
+        }
+
+        &--special{
+            cursor: pointer;
+        margin-left: 0rem !important;
+            @include respond(tab-port){
+                display: block;
+                font-size: 3rem; 
+                margin-bottom: 2rem;
+                text-align: center;
+                margin-right: 0rem !important;
+              }
+              @include respond(phone){
+                font-size: 4rem;
+                margin-bottom: 2rem;
+              }
+            font-size: 1.6rem;
+            display: inline-block;
+            font-weight: 400;
+            text-decoration: none;
+            transition: all .6s;
+        }
+       
+        @include respond(tab-port){
+            display: block;
+            font-size: 4rem; 
+            margin-bottom: 2rem;
+            text-align: center;
+            margin-right: 0 !important;
+          }
+          @include respond(phone){
+            font-size: 4rem;
+            margin-bottom: 2rem;
+          }
+
+        &:hover{
+            color: $blue !important;
+        }
+         & a{
+             text-decoration: none !important;
+             color: unset;
+         }
+
+    
+        &:not(:last-child){
+            margin-right: 1.8rem;
+        }
+        &:active{
+            color:white !important;
+        }
+    }
+}
+
+
+.nav{
+    box-shadow: -2px 29px 45px -30px rgba(0,0,0,0.24);
+    -webkit-box-shadow: -2px 29px 45px -30px rgba(0,0,0,0.24);
+    -moz-box-shadow: -2px 29px 45px -30px rgba(0,0,0,0.24);
+    @include respond(tab-port){
+        display: none;  
+      }
+      display: flex; 
+
+      &--mobile{
+          
+        @include respond(tab-port){
+            display: flex;  
+            z-index: 2000;
+          }
+          display: none;  
+      }
+}
+
+
+.logo-container{
+    display: flex;
+    align-items: center;
+}
+
+.link-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 3rem;
+
+
+    &-first{
+        & .list-first .nav__link{
+            display: inline-block;
+        }
+    }
+
+    &__mobile{
+        display: none;
+        @include respond(tab-port){
+             width: 100vw;
+             height: 100vh;
+             position: fixed;
+             z-index: 1000;
+             background: white;
+             animation: fadein forwards 0.5s;
+             padding-top: 5rem;
+             color: white !important;
+          display: flex;
+
+          }
+
+          width: 100%;
+        //   display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        //   margin-right: 3rem;
+    }
+}
+
+.sub-menu-2,
+.sub-menu-3,
+.sub-menu-4,
+.sub-menu-5,
+.sub-menu-6{
+    &--center{
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80vw;
+    }
+}
+
+.sub-menu-1{
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
+.sub-menu-4{
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+
+.sub-menu-1,
+.sub-menu-2,
+.sub-menu-3,
+.sub-menu-4,
+.sub-menu-5,
+.sub-menu-6{
+    // display: none;
+    position: absolute;
+    
+    z-index: 100;
+    background-color: white;
+    box-shadow: 1px 4px 11px -1px rgba(0,0,0,0.29);
+    -webkit-box-shadow: 1px 4px 11px -1px rgba(0,0,0,0.29);
+    -moz-box-shadow: 1px 4px 11px -1px rgba(0,0,0,0.29);
+    padding: 1rem 2rem 0.5rem 2rem;
+    border-radius: 5px;
+    display: none;
+     & ul{
+         list-style: none;
+     }
+}
+
+
+.sub-menu-link-1:hover{
+    & .sub-menu-1{
+        display: block;
+        animation: fadein 1s forwards;
+    }
+}
+
+.sub-menu-link-2:hover{
+    & .sub-menu-2{
+        display: block;
+        animation: fadein 1s forwards;
+    }
+}
+
+.sub-menu-link-3:hover{
+    & .sub-menu-3{
+        display: block;
+        animation: fadein 1s forwards;
+    }
+}
+
+.sub-menu-link-4:hover{
+    & .sub-menu-4{
+        display: block;
+        animation: fadein 1s forwards;
+    }
+}
+
+.sub-menu-link-5:hover{
+    & .sub-menu-5{
+        display: block;
+        animation: fadein 1s forwards;
+    }
+}
+
+
+
+.sub-menu-link-6:hover{
+    & .sub-menu-6{
+        display: block;
+        animation: fadein 1s forwards;
+    }
+}
+
+.sub-link{
+    transition: all .3s;
+    color: $deep-blue !important;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    margin-left: 0rem;
+    &:hover{
+     background-color: $red-ish-light !important;
+     color: $dark-blue !important;
+    }
+}
+
+
+.log-in, .sign-up{
+        color: white;
+            padding: 7px 15px;
+            border-radius: 10px;
+            transition: all .5s;
+            &:hover{
+                box-shadow: 1px 1px 27px 2px rgba(0,0,0,0.1);
+                -webkit-box-shadow: 1px 1px 27px 2px rgba(0,0,0,0.1);
+                -moz-box-shadow: 1px 1px 27px 2px rgba(0,0,0,0.1);
+            }
+}
+.sign-up{
+    background-color: $deep-blue;
+    &:hover{
+        color: $deep-blue !important;
+        background-color: white;
+        
+    }
+}
+.log-in{
+    background-color: $red-ish;
+    margin-right:  1.5rem;
+    &:hover{
+        color: $red-ish !important;
+        background-color: white;
+    }
+}
+
+.nav--mobile{
+
+}

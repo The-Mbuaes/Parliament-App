@@ -1,0 +1,50 @@
+.specials{
+    width: 25rem;
+    padding: 2rem;
+
+    @include respond(tab-land){
+        width: 40rem;
+    }
+
+    @include respond(tab-port){
+        width: 40rem;
+    }
+
+    @include respond(phone){
+    width: 18rem;
+    padding: 2rem 0;
+    margin: 0 4rem;
+    }
+
+    margin-right: 3rem;
+    &__image{
+        height: 20rem;
+        @include respond(tab-land){
+        height: 40rem;
+        }
+        @include respond(phone){
+            height: 20rem
+        }
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+
+        box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.09);
+        -webkit-box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.09);
+        -moz-box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.09);
+        // transition: all .2s;
+
+        // &:hover{
+        // background-size:contain;
+        // }
+    }
+
+    &__bottom{
+        justify-content: space-between;
+        & p{
+            @include respond(tab-port){
+                text-align: center;
+            }
+        }
+    }
+}

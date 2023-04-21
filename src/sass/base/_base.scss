@@ -1,0 +1,232 @@
+*,
+*::after,
+*::before{
+   margin: 0;
+   padding: 0;
+   box-sizing: inherit;
+}
+
+svg{
+  display: inline-block !important;
+}
+
+html{
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+
+    @include respond(tab-land){
+        font-size: 56.25%;                      //1rem = 9px , 9/16  56.25%        
+      }
+    
+      @include respond(tab-port){
+        font-size: 50%; 
+                                        //1rem = 8px , 8/16  50%
+        } 
+    
+        @include respond(phone){
+          font-size: 30%;  
+        }
+      @include respond(big-desktop){
+        font-size: 75%;                                //1rem = 12px 12/16  75%  
+      }
+
+}
+
+.App{
+// overflow-x: hidden;
+}
+
+.showAbove{
+  position: relative;
+  z-index: 200;
+}
+
+.fullOnPhone{
+  @include respond(tab-port){
+    width: 50% !important;  
+  }
+}
+
+.link{
+  color: $red-ish;
+}
+
+.moto{
+  font-size: 2rem;
+  @include respond(tab-port){
+    font-size: 2.5rem;
+  }
+}
+
+// .forSmall{
+//   display: none;
+//   @include respond(phone){
+//     display: flex;
+//   }
+// }
+
+
+.forBig{
+  @include respond(phone){
+    display: none;
+  }
+}
+
+.columnWhenSmall{
+  @include respond(phone){
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.home-bg{
+  background-color: white !important;
+  padding: 0 3rem;
+}
+
+
+.herodiv{
+  height: 90vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include respond(tab-port){
+      background-size:cover;
+      background-position: center;
+   }
+  }
+
+  .hero-text{
+    font-size: 5rem;
+    text-transform: none !important;
+    @include respond(phone){
+      font-size: 8rem;
+    }
+  }
+
+
+  .faq{
+    &__bg{
+      background-color: $light-gray;
+    }
+  }
+
+.page{
+  padding-top: 10rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  animation: fadein 2s forwards;
+  @include respond(tab-port){
+  padding-top: 100px;
+  }
+  @include respond(phone){
+    padding-top: 60px;
+    }
+}
+
+.center-on-tab-port{
+  display: flex;
+  @include respond(tab-port){
+    justify-content: center;
+  }
+}
+
+
+.about-us-logo{
+  width: 50rem;
+}
+
+
+.fadeinClass{
+  animation: fadein 2s forwards !important;
+}
+
+.form{
+  &__margin{
+    margin: 0 100px;
+    @include respond(tab-port){
+      margin: 0 50px;
+    }
+    @include respond(phone){
+      margin: 0 25px;
+    }
+  }
+}
+
+.button-container{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+.bottombar{
+  width: 88%;
+  @include respond(tab-land){
+    width: 100%;
+  }
+}
+
+.calendar{
+  width: 70rem;
+}
+
+.collabimg{
+  width: 90vw;
+}
+
+
+.support-control{
+  width: 45% !important;
+  @include respond(tab-port){
+  width: 70% !important;
+  }
+  @include respond(phone){
+    width: 100% !important
+  }
+
+  &-2{
+    width: 200px !important;
+  }
+}
+
+a{
+  text-decoration: none;
+}
+
+
+.chakra-alert__desc{
+  font-size: 1.6rem !important
+}
+
+input[type="date"]::-webkit-datetime-edit, input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button {
+  color: #fff;
+  position: relative;
+  width: 150px !important;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field{
+  position: absolute !important;
+  border-left:1px solid #8c8c8c;
+  padding: 2px;
+  color:#000;
+  left: 76px;
+}
+
+input[type="date"]::-webkit-datetime-edit-day-field{
+  position: absolute !important;
+  border-left:1px solid #8c8c8c;
+  padding: 2px;
+  color:#000;
+  left: 46px;
+}
+
+
+input[type="date"]::-webkit-datetime-edit-month-field{
+  position: absolute !important;
+  color:#000;
+  padding: 2px;
+  left: 4px;
+  
+}

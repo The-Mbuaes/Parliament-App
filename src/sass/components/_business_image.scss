@@ -1,0 +1,25 @@
+.business_image{
+    width: 15rem;
+    height: 15rem;
+    border-radius: 50%;
+    background-size: cover;
+    box-shadow: -1px 8px 48px 0px rgba(0,0,0,0.12);
+    -webkit-box-shadow: -1px 8px 48px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: -1px 8px 48px 0px rgba(0,0,0,0.12);
+    position: relative;
+    margin: 2rem;
+
+    &--smaller{
+        width: 8rem;
+        height: 8rem;  
+    margin-right: 1rem;
+    @include respond(tab-port){
+        margin: 2rem;
+    }
+        
+        @include respond(phone){
+            width: 10rem;
+            height: 10rem;  
+        }
+    }
+}

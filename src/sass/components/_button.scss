@@ -1,0 +1,244 @@
+.button {
+  &--green {
+    background-color: rgb(1, 165, 1);
+  }
+  &--getstarted {
+    color: black !important;
+    border: 2px solid black;
+    background-color: transparent;
+    & a {
+      color: black;
+    }
+    &:hover {
+      & a {
+        color: $light-blue;
+      }
+    background-color: $blue;
+    border: none;
+    color: white !important;
+    }
+    &:active {
+      & a {
+        color: black;
+      }
+    }
+
+    &.visible {
+      border: 2px solid $light-blue;
+      color: $light-blue;
+      & a {
+        color: $light-blue;
+      }
+    }
+  }
+  &--red {
+    background-color: red;
+    &:hover {
+      color: red !important;
+      box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    @include respond(tab-port) {
+      margin-right: 0 !important;
+      margin-bottom: 10px;
+    }
+
+    &:active {
+      background-color: red !important;
+      color: white !important;
+      box-shadow: none;
+      transform: scale(0.8);
+    }
+  }
+  &--blue {
+    background-color: blue;
+    &:hover {
+      color: blue !important;
+      box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      background-color: blue !important;
+      color: white !important;
+      box-shadow: none;
+      transform: scale(0.8);
+    }
+  }
+
+  &--flip {
+    background-color: $red-ish;
+  }
+  &--red-ish {
+    background-color: $red-ish;
+    box-shadow: 1px 1px 27px 2px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 1px 1px 27px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 1px 1px 27px 2px rgba(0, 0, 0, 0.2);
+  }
+  &--search {
+    font-size: 1.8rem;
+    padding: 0.7rem 1rem;
+    @include respond(tab-port) {
+      font-size: 3rem !important;
+      padding: 0.5rem;
+    }
+    @include respond(phone) {
+      font-size: 4rem !important;
+      padding: 2rem !important;
+    }
+  }
+  padding: 8px 20px;
+  background-color: $blue;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-size: 1.7rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s;
+  @include respond(tab-port) {
+    font-size: 2.5rem;
+    padding: 5px 20px;
+  }
+  @include respond(phone) {
+    padding: 1rem 3rem;
+    font-size: 3rem;
+  }
+  &:hover {
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    color: black
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: scale(0.95);
+  }
+
+  & img {
+    width: 2.5rem;
+  }
+
+  &--withicon {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+
+.inner {
+  display: inline-block;
+}
+
+#button {
+  &--login {
+    & a {
+      color: white;
+    }
+    margin-right: 15px;
+    @include respond(tab-port) {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+    &:hover {
+      & a {
+        color: black !important;
+      }
+      color: black !important;
+      background-color: $white !important;
+    }
+  }
+}
+
+.icon_button {
+  background-color: $blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: all 0.3s;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  & img {
+    width: 2rem;
+  }
+
+  & span {
+    transition: all 0.2s;
+    width: 0px;
+    opacity: 0;
+  }
+
+  // &:hover {
+  //   padding: 5px 15px;
+  //   border-radius: 10px;
+  //   span {
+  //     width: 50px;
+  //     opacity: 1;
+  //   }
+  // }
+}
+
+.white-button {
+  background-color: white;
+  border: none;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  box-shadow: 4px 0px 11px 0px rgba(0, 0, 0, 0.09);
+  -webkit-box-shadow: 4px 0px 11px 0px rgba(0, 0, 0, 0.09);
+  -moz-box-shadow: 4px 0px 11px 0px rgba(0, 0, 0, 0.09);
+
+  &__firsticon {
+    width: 2.5rem;
+    margin-right: 2rem;
+  }
+
+  &__copy {
+    width: 2.5rem;
+    margin-left: 2rem;
+
+    // transform: translateX(0px);
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    .white-button__chevronright {
+      transform: translateX(5px) scale(1.1);
+    }
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: scale(0.95);
+  }
+}
+
+.cta_buttons {
+  @include respond(phone) {
+    width: 100%;
+  }
+  & .grid-3 .button {
+    @include respond(phone) {
+      margin: 1rem;
+      padding: 1rem 0.5rem;
+    }
+  }
+
+  & .grid-2 .button {
+    @include respond(phone) {
+      margin: 0rem 1rem;
+      padding: 1rem 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+.section{
+    background-color: #F2F5FF;
+    position: relative;
+    overflow: hidden;
+    // width: 100vw;
+    height: auto;
+
+    &-legal{
+        padding: 0rem 3rem;
+    }
+
+    @include respond(tab-port){
+        padding: 3rem 5rem;
+    }
+    @include respond(phone){
+        padding: 3rem 6rem;
+    }
+    &__content{
+        position: relative;
+        z-index: 1;
+        padding: 1rem 12rem;
+        @include respond(tab-land){
+        padding: 1rem 8rem;
+        }
+    }
+}
