@@ -1,18 +1,180 @@
+import React, { useState } from "react";
 import AuthDetails from "./components/auth/AuthDetails";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
+import {
+  createTheme,
+  ThemeProvider,
+  ThemeCssVar,
+  CssVarsTheme,
+} from "@mui/material";
+import { extendTheme, CssVarsProvider } from "@mui/joy/styles";
+import { connect } from "react-redux";
+import { increment, setAuth } from "./redux/actions";
+import { Link, Route, Routes , useNavigate} from "react-router-dom";
+import Home from "./components/Home";
+import { BottomNavigation } from "@mui/material";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import AccountNull from "./components/auth/Accountnull";
+
+const theme = extendTheme({
+  colorSchemes: {
+    light: {
+      palette: {
+        mode: "light",
+        primary: {
+          50: "#1F6603",
+          100: "#1F6603",
+          200: "#1F6603",
+          300: "#1F6603",
+          400: "#1F6603",
+          500: "#1F6603",
+          600: "#1F6603",
+          700: "#1F6603",
+          800: "#1F6603",
+          900: "#1F6603",
+          solidActiveBg: "#DCC091"
+        },
+        neutral: {
+          50: "#DCC091",
+          100: "#DCC091",
+          200: "#DCC091",
+          300: "#DCC091",
+          400: "#DCC091",
+          500: "#DCC091",
+          600: "#DCC091",
+          700: "#DCC091",
+          800: "#DCC091",
+          900: "#DCC091",
+          solidActiveBg: "#DCC091"
+        },
+
+        secondary: {
+          50: "#DCC091",
+          100: "#DCC091",
+          200: "#DCC091",
+          300: "#DCC091",
+          400: "#DCC091",
+          500: "#DCC091",
+          600: "#DCC091",
+          700: "#DCC091",
+          800: "#DCC091",
+          900: "#DCC091",
+          solidActiveBg: "#DCC091"
+        }
+      },
+    },
+    dark: {
+      palette: {
+        mode: "light",
+        primary: {
+          50: "#1F6603",
+          100: "#1F6603",
+          200: "#1F6603",
+          300: "#1F6603",
+          400: "#1F6603",
+          500: "#1F6603",
+          600: "#1F6603",
+          700: "#1F6603",
+          800: "#1F6603",
+          900: "#1F6603",
+          solidActiveBg: "#1F6603"
+        },
+        neutral: {
+          50: "#DCC091",
+          100: "#DCC091",
+          200: "#DCC091",
+          300: "#DCC091",
+          400: "#DCC091",
+          500: "#DCC091",
+          600: "#DCC091",
+          700: "#DCC091",
+          800: "#DCC091",
+          900: "#DCC091",
+          solidActiveBg: "#DCC091"
+        },
+
+        secondary: {
+          50: "#DCC091",
+          100: "#DCC091",
+          200: "#DCC091",
+          300: "#DCC091",
+          400: "#DCC091",
+          500: "#DCC091",
+          600: "#DCC091",
+          700: "#DCC091",
+          800: "#DCC091",
+          900: "#DCC091",
+          solidActiveBg: "#DCC091"
+        }
+        
+      },
+    },
+  },
+  fontFamily: {
+    body: "Poppins, Sans-serrif",
+    display: "Poppins, Sans-serrif",
+    code: "Poppins, Sans-serrif",
+    fallback: "Poppins, Sans-serrif",
+  }
+});
+
+const newTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#1F6603",
+    },
+    secondary: {
+      main: "#DCC091",
+    },
+  },
+});
 
 function App() {
+  const [value, setValue] = useState(1);
+  const navigate = useNavigate();
   return (
-    <div className="App center-hrz--col u-padding">
-      <SignIn/>
-      <br/>
-      <br/>
-      <SignUp/>
-      <br/>
-      <br/>
-      <AuthDetails/>
-    </div>
+    <>
+      <CssVarsProvider theme={theme}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/account" element={<AccountNull />} />
+        </Routes>
+      </CssVarsProvider>
+
+        <BottomNavigation
+          showLabel
+          value={value}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+          }}
+          sx={{
+            width: "100%",
+            position: "fixed",
+            bottom: 0,
+            bgcolor: "white",
+            "& .Mui-selected": {
+              "& .MuiBottomNavigationAction-label": {
+                fontSize: (theme) => theme.typography.caption,
+                transition: "none",
+                fontWeight: "bold",
+                lineHeight: "20px",
+              },
+              "& .MuiSvgIcon-root, & .MuiBottomNavigationAction-label": {
+                color: "#1F6603"
+              },
+            },
+          }}
+        >
+          <BottomNavigationAction label="Account" icon={<AccountCircleOutlinedIcon />} onClick={()=>{navigate("/account")}}/>
+          <BottomNavigationAction label="Home" icon={<HomeOutlinedIcon />} onClick={()=>{navigate("/")}}/>
+          <BottomNavigationAction label="Favorites" icon={<StarBorderIcon />} onClick={()=>{navigate("/favorites")}}/>
+        </BottomNavigation>
+    </>
   );
 }
 

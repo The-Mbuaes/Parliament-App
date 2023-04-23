@@ -12,23 +12,23 @@ svg{
 
 html{
     scroll-behavior: smooth;
-    font-size: 62.5%;
+    // font-size: 62.5%;
 
-    @include respond(tab-land){
-        font-size: 56.25%;                      //1rem = 9px , 9/16  56.25%        
-      }
+    // @include respond(tab-land){
+    //     font-size: 56.25%;                      //1rem = 9px , 9/16  56.25%        
+    //   }
     
-      @include respond(tab-port){
-        font-size: 50%; 
-                                        //1rem = 8px , 8/16  50%
-        } 
+    //   @include respond(tab-port){
+    //     font-size: 50%; 
+    //                                     //1rem = 8px , 8/16  50%
+    //     } 
     
-        @include respond(phone){
-          font-size: 30%;  
-        }
-      @include respond(big-desktop){
-        font-size: 75%;                                //1rem = 12px 12/16  75%  
-      }
+    //     @include respond(phone){
+    //       font-size: 30%;  
+    //     }
+    //   @include respond(big-desktop){
+    //     font-size: 75%;                                //1rem = 12px 12/16  75%  
+    //   }
 
 }
 
@@ -114,16 +114,11 @@ html{
   }
 
 .page{
-  padding-top: 10rem;
+  padding-top: 2rem;
   padding-left: 2rem;
   padding-right: 2rem;
   animation: fadein 2s forwards;
-  @include respond(tab-port){
-  padding-top: 100px;
-  }
-  @include respond(phone){
-    padding-top: 60px;
-    }
+
 }
 
 .center-on-tab-port{
