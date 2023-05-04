@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import Button from '@mui/joy/Button';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const signup = (e) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ const SignUp = () => {
         <h3 className='header-text u-margin-bottom'>Account</h3>
         <div className="center-hrz--col center-vert" style={{height: "70vh"}}>
         <p className="normal-text u-margin-bottom-small">Who are you signing up as?</p>
-        <Button endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Parliamentarian</Button> <br/>
+        <Button onClick={()=>{navigate("/signup/parliamentarian")}} endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Parliamentarian</Button> <br/>
         <Button endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Secretariat</Button> <br/>
         <Button endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Public Member</Button> 
         </div>

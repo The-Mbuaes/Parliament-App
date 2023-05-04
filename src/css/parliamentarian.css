@@ -1,0 +1,389 @@
+.logo-icon {
+    position: absolute;
+    top: 52px;
+    left: 131px;
+    width: 128px;
+    height: 76px;
+    object-fit: cover;
+  }
+  .parliament-of-namibia,
+  .sign-up-as {
+    position: absolute;
+    top: 132px;
+    left: 104px;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .sign-up-as {
+    top: 228px;
+    left: 47px;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+  }
+  .group-child {
+    border: 0;
+    background-color: transparent;
+    position: absolute;
+    top: 24px;
+    left: 0;
+    width: 331px;
+    height: 44.81px;
+  }
+  .nameemailcom,
+  .your-email-address {
+    position: absolute;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .your-email-address {
+    top: 0;
+    left: 10px;
+    font-weight: 500;
+  }
+  .nameemailcom {
+    top: 37px;
+    left: 18px;
+    color: var(--color-gray);
+  }
+  .group-container,
+  .group-div,
+  .group-parent {
+    position: absolute;
+    top: 390px;
+    left: 30px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+    width: 331px;
+    height: 68.81px;
+    text-align: left;
+  }
+  .group-container,
+  .group-div {
+    top: 300px;
+    left: 29px;
+  }
+  .group-div {
+    top: 480px;
+    left: 30px;
+  }
+  .vector-icon {
+    position: absolute;
+    height: 1.06%;
+    width: 1.21%;
+    top: 89.33%;
+    right: 12.89%;
+    bottom: 9.61%;
+    left: 85.9%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+  }
+  .rectangle-div {
+    border-radius: var(--br-17xl);
+    background-color: var(--color-darkgreen);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+  }
+  .group-wrapper,
+  .rectangle-div,
+  .rectangle-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 331px;
+    height: 44.81px;
+  }
+  .group-wrapper {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+  }
+  .sign-up {
+    position: absolute;
+    top: 9px;
+    left: 109px;
+    display: inline-block;
+    width: 114.03px;
+    height: 26.23px;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .group-parent1 {
+    position: absolute;
+    top: 1050px;
+    left: 28px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+    width: 331px;
+    height: 44.81px;
+    font-size: var(--font-size-base);
+    color: var(--color-white);
+  }
+  .group-child1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.01);
+    width: 25px;
+    height: 23px;
+  }
+  .icon-chevron-left {
+    position: absolute;
+    top: 3px;
+    left: 6px;
+    width: 10.37px;
+    height: 18px;
+  }
+  .rectangle-parent {
+    position: absolute;
+    top: 47px;
+    left: 32px;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.01);
+    width: 25px;
+    height: 23px;
+    cursor: pointer;
+  }
+  .already-have-an {
+    position: absolute;
+    top: 1122px;
+    left: 116px;
+    font-weight: 500;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .group-child2 {
+    border-radius: var(--br-17xl);
+    background-color: var(--color-burlywood);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+  }
+  .group-child2,
+  .group-frame,
+  .rectangle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 115px;
+    height: 44.81px;
+  }
+  .group-frame {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+  }
+  .log-in {
+    position: absolute;
+    top: 9px;
+    left: 27px;
+    display: inline-block;
+    width: 60px;
+    height: 26px;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .group-input,
+  .group-parent2 {
+    position: absolute;
+    height: 44.81px;
+  }
+  .group-parent2 {
+    top: 1155px;
+    left: 138px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+    width: 115px;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+  }
+  .group-input {
+    border: 0;
+    background-color: transparent;
+    top: 0;
+    left: 0;
+    width: 331px;
+  }
+  .icon-eye-close-f {
+    position: absolute;
+    top: 13px;
+    left: 291px;
+    width: 19.06px;
+    height: 18.08px;
+  }
+  .confirm-your-password-parent,
+  .group-parent3 {
+    position: absolute;
+    top: 24px;
+    left: 0;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+    width: 331px;
+    height: 44.81px;
+  }
+  .confirm-your-password-parent {
+    top: 960px;
+    left: 30px;
+    height: 68.81px;
+    text-align: left;
+  }
+  .create-a-password,
+  .min-8-characters {
+    position: absolute;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .create-a-password {
+    top: 0;
+    left: 10px;
+    font-weight: 500;
+    color: var(--color-black);
+  }
+  .min-8-characters {
+    top: 37px;
+    left: 18px;
+  }
+  .group-parent5 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+    width: 331px;
+    height: 44.81px;
+  }
+  .min-8-characters1 {
+    position: absolute;
+    top: 13px;
+    left: 19px;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .create-a-password-parent,
+  .group-parent7 {
+    position: absolute;
+    width: 331px;
+    height: 68.81px;
+  }
+  .create-a-password-parent {
+    top: 870px;
+    left: 30px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+    text-align: left;
+    color: var(--color-gray);
+  }
+  .group-parent7 {
+    top: 0;
+    left: 0;
+  }
+  .group-child6,
+  .group-parent7,
+  .group-parent8 {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+  }
+  .group-parent8 {
+    position: absolute;
+    top: 24px;
+    left: 0;
+    width: 331px;
+    height: 44.81px;
+    color: var(--color-gray);
+  }
+  .group-child6 {
+    border-radius: var(--br-17xl);
+    background-color: var(--color-burlywood);
+  }
+  .group-button,
+  .group-child6,
+  .rectangle-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 228px;
+    height: 44.81px;
+  }
+  .group-button {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+  }
+  .send-verification-code {
+    position: absolute;
+    top: 9px;
+    left: 21px;
+    display: inline-block;
+    width: 185px;
+    height: 26px;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .group-parent6,
+  .group-parent9 {
+    position: absolute;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+  }
+  .group-parent9 {
+    top: 84px;
+    left: 0;
+    width: 228px;
+    height: 44.81px;
+    cursor: pointer;
+    text-align: center;
+    font-size: var(--font-size-base);
+  }
+  .group-parent6 {
+    top: 570px;
+    left: 30px;
+    width: 331px;
+    height: 128.81px;
+    text-align: left;
+  }
+  .we-sent-you {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-weight: 500;
+  }
+  .group-parent11 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+    width: 333px;
+    height: 68.81px;
+  }
+  .confirm-phone-number,
+  .your-verification-code {
+    position: absolute;
+    top: 13px;
+    left: 18px;
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0.01);
+  }
+  .confirm-phone-number {
+    top: 9px;
+    left: 21px;
+    display: inline-block;
+    width: 207px;
+    height: 26px;
+  }
+  .group-parent10,
+  .group-parent13 {
+    position: absolute;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.01);
+  }
+  .group-parent13 {
+    top: 84px;
+    left: 0;
+    width: 228px;
+    height: 44.81px;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+  }
+  .group-parent10 {
+    top: 720px;
+    left: 30px;
+    width: 333px;
+    height: 128.81px;
+    text-align: left;
+  }
+  .parliamentarian {
+    position: relative;
+    background-color: var(--color-white);
+    width: 100%;
+    height: 1390px;
+    overflow: hidden;
+    text-align: center;
+    font-size: var(--font-size-xs);
+    color: var(--color-black);
+    font-family: var(--font-poppins);
+  }
+  
