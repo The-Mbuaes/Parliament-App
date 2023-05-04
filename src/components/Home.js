@@ -57,7 +57,7 @@ const Home = (props) => {
     // Please sync "Account (Not Signed In)" to the project
   }, []);
     return (
-      <div className="home-version-2">
+      <div className="home-version-2 fadein">
       <img className="home-version-2-child" alt="" src={require("../assets/home/group-315@2x.png")} />
       <img
         className="icon-more-vertical-f"

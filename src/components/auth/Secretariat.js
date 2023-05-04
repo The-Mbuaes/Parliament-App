@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import Logo from "../../assets/home/logo@2x.png";
 import { useNavigate } from "react-router-dom";
 
-const Parliamentarian = () => {
+const Secretariat = () => {
   const navigate = useNavigate();
   const onGroupButtonClick = useCallback(() => {
     //sign up here
@@ -39,7 +39,6 @@ const Parliamentarian = () => {
         color: "#000",
         fontFamily: "Poppins",
       }}
-      className="fadein"
     >
       <img
         style={{
@@ -105,13 +104,13 @@ const Parliamentarian = () => {
         style={{
           position: "absolute",
           top: "228px",
-          left: "47px",
+          left: "77px",
           fontSize: "20px",
           fontWeight: "600",
           textShadow: "0px 0px 0px rgba(255, 255, 255, 0.01)",
         }}
       >
-        Sign Up as a Parliamentarian
+        Sign Up as a Secretariat
       </div>
       <div
         style={{
@@ -461,7 +460,6 @@ const Parliamentarian = () => {
             }}
             id="confirm-password"
             placeholder="Confirm Password"
-
           className="inputt"
             type="password"
           />
@@ -717,4 +715,4 @@ const Parliamentarian = () => {
   );
 };
 
-export default Parliamentarian;
+export default Secretariat;

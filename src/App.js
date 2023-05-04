@@ -20,6 +20,8 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AccountNull from "./components/auth/Accountnull";
 import Parliamentarian from "./components/auth/Parliamentarian";
+import Secretariat from "./components/auth/Secretariat";
+import PublicMember from "./components/auth/PublicMember";
 
 const theme = extendTheme({
   colorSchemes: {
@@ -145,6 +147,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/account" element={<AccountNull />} />
           <Route path="/signup/parliamentarian" element={<Parliamentarian/>} />
+          <Route path="/signup/secretariat" element={<Secretariat/>} />
+          <Route path="/signup/publicmember" element={<PublicMember/>} />
         </Routes>
       </CssVarsProvider>
 
