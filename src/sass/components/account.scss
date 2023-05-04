@@ -1,0 +1,10 @@
+.account{
+    &__pic{
+        background-image: url("../../assets/home/ellipse-1@2x.png");
+        background-position: center;
+        background-size: cover;
+        height: 250px;
+        width: 250px;
+        border-radius: 50%;
+    }
+}
