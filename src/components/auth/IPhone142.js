@@ -183,7 +183,7 @@ const IPhone142 = ({ onClose }) => {
           color: "#858585",
         }}
       >
-        Look for your Constituency
+        Namibia Constituencies
       </div>
     </div>
   );

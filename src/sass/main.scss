@@ -10,37 +10,7 @@
 @import "./pages/home";
 @import "./pages/parliamentariansu";
 
-//old
-@import "./components/navbar";
-@import "./components/footer";
-@import "./components/button";
-@import "./components/input";
-@import "./components/modal";
-@import "./components/articles";
-@import "./components/loading";
-@import "./components/singleArticle";
-@import "./components/slider";
-@import "./components/section";
-@import "./components/video";
-@import "./components/features";
-@import "./components/vendor";
-@import "./components/datarow";
-@import "./components/invoice";
-@import "./components/notification";
-
-
-//new
-@import "./components/pill";
-@import "./components/header";
-@import "./components/logo";
-@import "./components/logo";
-@import "./components/business_image";
-@import "./components/specials";
-@import "./components/map";
-@import "./components/card";
-@import "./components/advantage";
-
-
+@import "./components/account.scss";
 @import "./layout/center_hrz";
 @import "./layout/center_vert";
 @import "./layout/rows";
