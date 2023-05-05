@@ -24,6 +24,8 @@ import Secretariat from "./components/auth/Secretariat";
 import PublicMember from "./components/auth/PublicMember";
 import LogIn from "./components/auth/Login";
 import AccountPagePublicMember from "./components/Account/publicmember";
+import AuthContextProvider from "./context/AuthContext";
+
 
 const theme = extendTheme({
   colorSchemes: {
@@ -142,7 +144,7 @@ function App() {
   const [value, setValue] = useState(1);
   const navigate = useNavigate();
   return (
-    <>
+    <AuthContextProvider>
       <CssVarsProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -186,7 +188,7 @@ function App() {
           <BottomNavigationAction label="Home" icon={<HomeOutlinedIcon />} onClick={()=>{navigate("/")}}/>
           <BottomNavigationAction label="Favorites" icon={<StarBorderIcon />} onClick={()=>{navigate("/favorites")}}/>
         </BottomNavigation>
-    </>
+    </AuthContextProvider>
   );
 }
 

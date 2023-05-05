@@ -1,4 +1,23 @@
 import { combineReducers } from "redux";
+import {persistReducer, createTransform} from "redux-persist";
+import JSOG from 'jsog';
+import storage from "redux-persist/lib/storage";
+
+export const JSOGTransform = createTransform(
+  (inboundState, key) => JSOG.encode(inboundState),
+  (outboundState, key) => JSOG.decode(outboundState),
+)
+
+
+const persistConfig  = {
+  key: "root",
+  storage,
+  whiteList: ["authReducer", "counterReducer"],
+  transforms: [JSOGTransform]
+}
+
+
+
 
 const authReducer = (state = null, action) => {
   switch (action.type) {
@@ -22,4 +41,4 @@ const rootReducer = combineReducers({
     count: counterReducer
 })
 
-export default rootReducer;
+export default persistReducer(persistConfig, rootReducer);

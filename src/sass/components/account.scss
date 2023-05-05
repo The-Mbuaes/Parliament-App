@@ -1,10 +1,26 @@
-.account{
-    &__pic{
-        background-image: url("../../assets/home/ellipse-1@2x.png");
-        background-position: center;
-        background-size: cover;
-        height: 250px;
-        width: 250px;
-        border-radius: 50%;
-    }
+.account {
+  &__pic {
+    background-image: url("../../assets/home/ellipse-1@2x.png");
+    background-position: center;
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
+
+  &__header {
+    background-color: #dcc091;
+    width: 90%;
+    border-radius: 10;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: -1px 6px 19px -2px rgba(0, 0, 0, 0.16);
+    -webkit-box-shadow: -1px 6px 19px -2px rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: -1px 6px 19px -2px rgba(0, 0, 0, 0.16);
+  }
+
+  &__detail{
+    border-bottom: 1px solid #828282;
+    padding: 8px 0px;
+  }
 }
