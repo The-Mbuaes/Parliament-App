@@ -6,8 +6,9 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./redux/reducers";
 import { BrowserRouter } from "react-router-dom";
-
+import {persistStore} from "redux-persist"; 
 let store = createStore(rootReducer);
+const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

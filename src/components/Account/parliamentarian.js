@@ -5,14 +5,12 @@ import { increment, setAuth } from "../../redux/actions";
 import Button from '@mui/joy/Button';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import {useAuth} from "../../context/AuthContext";
 
 
-
-
-const AccountPagePublicMember = (props) => {
-  const {register, login,signOut } = useAuth();
-  console.log(register);
+const AccountPageParliamentarian = (props) => {
+  const onGroupContainer2Click = useCallback(() => {
+    // Please sync "National Council Member Terms" to the project
+  }, []);
 
   return (
     <div className="fadein">
@@ -76,4 +74,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountPagePublicMember);
+)(AccountPageParliamentarian);

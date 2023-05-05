@@ -1,19 +1,118 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback , useEffect} from "react";
 import IPhone142 from "./IPhone142";
 import PortalPopup from "./PortalPopup";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/home/logo@2x.png";
+import { ToastContainer, toast } from 'react-toastify';
+import { db } from "../../firebase";
+import {useAuth} from "../../context/AuthContext";
+import { doc, setDoc } from "firebase/firestore"; 
+import { connect } from "react-redux";
+import { increment, setAuth } from "../../redux/actions";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 
-const PublicMember = () => {
-  const navigate = useNavigate()
+const PublicMember = (props) => {
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
+  const [constituency, setConstituency] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const {register} = useAuth();
+
+  useEffect(()=>{
+    console.log(props.auth);
+  })
+
+  const throwToast = (type, message)=>{
+    switch(type){
+      case "success":
+        toast.success(message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+      break;
+      case "warning": 
+      toast.warn(message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+        break;
+        case "error":
+          toast.warn(message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
+        break;
+    }
+  }
+
   const [isIPhone142Open, setIPhone142Open] = useState(false);
+
+
 
   const onGroupButtonClick = useCallback(() => {
     //sign up here
-    console.log("Alright")
     // Please sync "Home (1)" to the project
   }, []);
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    if(password !== confirm){
+        throwToast("warning", "Passwords do not match");
+        return;
+    }
+
+
+    try{
+      const userCred = await register(email, password);
+      const uid =  userCred.user.uid
+      const userObj = {
+        uid,
+        fullName,
+        email,
+        password,
+        id,
+        constituency,
+        phone,
+        type: "p_mem"
+      }
+
+      const userObjCreation = await setDoc(doc(db, "users", uid), userObj);
+      props.setAuth(userObj);
+      throwToast("success", "Account Successfully Created");
+    }catch(e){
+      console.log(e);
+      throwToast("error", e.message);
+    }finally{
+
+    }
+  }
+
+
+
 
   const onGroupContainer5Click = useCallback(() => {
     // Please sync "Account (Not Signed In)" to the project
@@ -87,30 +186,11 @@ const PublicMember = () => {
         >
           Parliament of Namibia
         </div>
+
         <div
           style={{
             position: "absolute",
-            top: "132px",
-            left: "104px",
-            fontWeight: "500",
-          }}
-        >
-          Parliament of Namibia
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "132px",
-            left: "104px",
-            fontWeight: "500",
-          }}
-        >
-          Parliament of Namibia
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "228px",
+            top: "160px",
             left: "54px",
             fontSize: "20px",
             fontWeight: "600",
@@ -118,6 +198,11 @@ const PublicMember = () => {
         >
           Sign Up as a Public Member
         </div>
+
+<form onSubmit={handleSubmit}>
+
+
+
         <input
           style={{
             position: "absolute",
@@ -130,6 +215,9 @@ const PublicMember = () => {
           id="email"
           type="email"
           placeholder="example@email.com"
+          required
+          value={email}
+          onChange={(e)=>{setEmail(e.target.value)}}
         />
         <div
           style={{
@@ -142,6 +230,35 @@ const PublicMember = () => {
           }}
         >
           Your Email Address
+        </div>
+
+        <input
+          style={{
+            position: "absolute",
+            top: "246px",
+            left: "30px",
+            width: "331px",
+            height: "44.81px",
+          }}
+          className="inputt"
+          id="fullName"
+          type="text"
+          placeholder="First and Last Name"
+          required
+          value={fullName}
+          onChange={(e)=>{setFullName(e.target.value)}}
+        />
+        <div
+          style={{
+            position: "absolute",
+            top: "220px",
+            left: "40px",
+            fontSize: "12px",
+            fontWeight: "500",
+            textAlign: "left",
+          }}
+        >
+          Your Full Name
         </div>
         <div
           style={{
@@ -166,6 +283,8 @@ const PublicMember = () => {
             className="inputt"
             id="constituency"
             placeholder="Constituency Name"
+            value={constituency}
+            onChange={(e)=>{setConstituency(e.target.value)}}
           />
         </div>
         <div
@@ -187,9 +306,12 @@ const PublicMember = () => {
               height: "44.81px",
             }}
             className="inputt"
-            id="number"
+            id="phone"
             type="number"
             placeholder="0812345678"
+            required
+            value={phone}
+            onChange={(e)=>{setPhone(e.target.value)}}
           />
         </div>
         <input
@@ -204,6 +326,9 @@ const PublicMember = () => {
           id="idnum"
           type="number"
           placeholder="ID Number"
+          required
+          value={id}
+          onChange={(e)=>{setId(e.target.value)}}
         />
         <div
           style={{
@@ -313,6 +438,7 @@ const PublicMember = () => {
                   width: "331px",
                   height: "44.81px",
                 }}
+                type="submit"
               />
             </div>
           </button>
@@ -397,6 +523,7 @@ const PublicMember = () => {
               width: "115px",
               height: "44.81px",
             }}
+            type="button"
           >
             <div
               style={{
@@ -457,6 +584,9 @@ const PublicMember = () => {
           id="confirm-password"
           type="password"
           placeholder="Confirm Password"
+          required
+          value={confirm}
+          onChange={(e)=>{setConfirm(e.target.value)}}
         />
         <div
           style={{
@@ -505,6 +635,8 @@ const PublicMember = () => {
               width: "228px",
               height: "44.81px",
             }}
+            type="button"
+
           >
             <div
               style={{
@@ -528,6 +660,8 @@ const PublicMember = () => {
                   width: "228px",
                   height: "44.81px",
                 }}
+            type="button"
+
               />
             </div>
           </button>
@@ -580,6 +714,8 @@ const PublicMember = () => {
               width: "228px",
               height: "44.81px",
             }}
+            type="button"
+
           >
             <div
               style={{
@@ -639,6 +775,8 @@ const PublicMember = () => {
               width: "105px",
               height: "44.81px",
             }}
+            type="button"
+
           >
             <div
               style={{
@@ -700,6 +838,9 @@ const PublicMember = () => {
           id="password"
           type="password"
           placeholder="Mimimum 8 Characters"
+          required
+          value={password}
+          onChange={(e)=>{setPassword(e.target.value)}}
         />
         <div
           style={{
@@ -711,6 +852,8 @@ const PublicMember = () => {
             height: "40px",
           }}
         />
+
+</form>
       </div>
       {isIPhone142Open && (
         <PortalPopup
@@ -721,8 +864,26 @@ const PublicMember = () => {
           <IPhone142 onClose={closeIPhone142} />
         </PortalPopup>
       )}
+       <ToastContainer />
     </>
   );
 };
 
-export default PublicMember;
+const mapStateToProps = (state) => ({
+  //this is the state in the store ///this will take the state from the store and put it as props in the component that is being connected
+  count: state.count,
+  auth: state.auth,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  //this will allow you to dispatch actions from anywhere in the compoonent
+  return {
+    increment: (num) => dispatch(increment(num)),
+    setAuth: (user) => dispatch(setAuth(user)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PublicMember);
