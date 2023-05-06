@@ -25,6 +25,7 @@ import PublicMember from "./components/auth/PublicMember";
 import LogIn from "./components/auth/Login";
 import AccountPagePublicMember from "./components/Account/publicmember";
 import AuthContextProvider from "./context/AuthContext";
+import Accountroot from "./components/Account/accountroot";
 
 
 const theme = extendTheme({
@@ -149,13 +150,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route exact path="/account" element={<AccountNull />} />
+          <Route exact path="/auth" element={<AccountNull />} />
           <Route path="/signup/parliamentarian" element={<Parliamentarian/>} />
           <Route path="/signup/secretariat" element={<Secretariat/>} />
           <Route path="/signup/publicmember" element={<PublicMember/>} />
           <Route path="/login" element={<LogIn/>} />
-
-          <Route path="/account/test" element={<AccountPagePublicMember/>} />
+          <Route path="/account" element={<Accountroot/>} />
 
         </Routes>
       </CssVarsProvider>

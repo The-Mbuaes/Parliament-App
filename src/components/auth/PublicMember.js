@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import IPhone142 from "./IPhone142";
 import PortalPopup from "./PortalPopup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import Logo from "../../assets/home/logo@2x.png";
 import { ToastContainer } from "react-toastify";
 import { db } from "../../firebase";
@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 import LoadingInButton from "../../animations/LoadingInButton";
 
 const PublicMember = (props) => {
+
+
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState("");
@@ -46,7 +48,6 @@ const PublicMember = (props) => {
         uid,
         fullName,
         email,
-        password,
         id,
         constituency,
         phone,
@@ -74,6 +75,11 @@ const PublicMember = (props) => {
   const closeIPhone142 = useCallback(() => {
     setIPhone142Open(false);
   }, []);
+
+
+  if(props.auth){
+    return <Navigate to="/account"/>
+  }
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import Logo from "../../assets/home/logo@2x.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Navigate} from "react-router-dom";
 import { db } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LoadingInButton from "../../animations/LoadingInButton";
 
 const LogIn = (props) => {
+
   const { login } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -43,6 +44,9 @@ const LogIn = (props) => {
     }
   };
 
+  if(props.auth){
+    return <Navigate to="/account"/>
+  }
   return (
     <div
       style={{
@@ -273,7 +277,7 @@ const LogIn = (props) => {
             {isLoading ? (
               <LoadingInButton style={{ position: "absolute", top: "-20px" }} />
             ) : (
-              "Sign Up"
+              "Log in"
             )}
           </div>
         </div>
@@ -297,6 +301,7 @@ const LogIn = (props) => {
             cursor: "pointer",
             fontSize: "16px",
           }}
+          onClick={()=>navigate("/signup")}
         >
           <div
             style={{

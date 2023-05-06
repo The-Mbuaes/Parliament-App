@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import Logo from "../../assets/home/logo@2x.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LoadingInButton from "../../animations/LoadingInButton";
 
 const Parliamentarian = (props) => {
+
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [authcode, setAuthcode] = useState("");
@@ -49,7 +50,7 @@ const Parliamentarian = (props) => {
         uid,
         fullName,
         email,
-        password,
+
         id,
         phone,
         profilePic: "",
@@ -70,6 +71,10 @@ const Parliamentarian = (props) => {
       setIsLoading(false);
     }
   };
+
+  if(props.auth){
+    return <Navigate to="/account"/>
+  }
 
   return (
     <div

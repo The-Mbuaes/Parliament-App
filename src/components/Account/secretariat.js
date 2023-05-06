@@ -5,6 +5,9 @@ import { increment, setAuth } from "../../redux/actions";
 import Button from '@mui/joy/Button';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import {useAuth} from "../../context/AuthContext";
+import {auth} from "../../firebase";
+import { signOut } from 'firebase/auth';
 
 const AccountPageSecretariat = (props) => {
 
@@ -13,13 +16,12 @@ const AccountPageSecretariat = (props) => {
       <div className="roww u-margin-bottom-small u-margin-top" style={{justifyContent: "space-around"}}>
       <div className="account__pic" alt="Profile picture" src="/ellipse-1@2x.png"></div>
       <div className="column">
-        <h2 className="header-text u-margin-bottom-small">Douglas  Masho</h2>
+        <h2 className="header-text u-margin-bottom-small">A secretariat</h2>
         <div className="roww" style={{justifyContent: "space-between"}}>
         <Button startDecorator={<ModeEditIcon />} style={{ borderRadius: 50, marginRight: "10px" }} onClick={()=>{}}>Edit Profile</Button> <br/>
-        <Button startDecorator={<CancelIcon />} style={{ borderRadius: 50 }} onClick={()=>{}} color="danger" variant="soft">Sign Out</Button> <br/>
+        <Button startDecorator={<CancelIcon />} style={{ borderRadius: 50 }} onClick={()=>{signOut(auth); props.setAuth(null)}} color="danger" variant="soft">Sign Out</Button> <br/>
         </div>
       </div>
-      
       </div>
 
       <div className="center-hrz">

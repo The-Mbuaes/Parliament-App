@@ -3,13 +3,14 @@ import {connect} from "react-redux";
 import Button from '@mui/joy/Button';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { Link, useNavigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
 
 const AccountNull = (props) => {
-    useEffect(()=>{
-        console.log(props.auth);
-    })
     const navigate = useNavigate();
+    if(props.auth){
+        return <Navigate to="/account"/>
+      }
     return (
         <div className="page">
         <h3 className='header-text u-margin-bottom'>Account</h3>

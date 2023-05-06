@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import Logo from "../../assets/home/logo@2x.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 import { doc, setDoc } from "firebase/firestore";
@@ -48,11 +48,10 @@ const Secretariat = (props) => {
         uid,
         fullName,
         email,
-        password,
         id,
         phone,
         profilePic: "",
-        type: "parl",
+        type: "sec",
         type_full: "Secretariat",
       };
 
@@ -69,6 +68,10 @@ const Secretariat = (props) => {
       setIsLoading(false);
     }
   };
+
+  if (props.auth) {
+    return <Navigate to="/account" />;
+  }
 
   return (
     <div
