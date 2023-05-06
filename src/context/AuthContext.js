@@ -25,7 +25,7 @@ const AuthContextProvider=({children})=>{
     }
 
     const signOut = ()=>{
-        return signOut(auth);
+        signOut(auth);
     }
   
     const value = {

@@ -1,20 +1,21 @@
-import { useState, useCallback , useEffect} from "react";
+import { useState, useCallback, useEffect } from "react";
 import IPhone142 from "./IPhone142";
 import PortalPopup from "./PortalPopup";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/home/logo@2x.png";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import { db } from "../../firebase";
-import {useAuth} from "../../context/AuthContext";
-import { doc, setDoc } from "firebase/firestore"; 
+import { useAuth } from "../../context/AuthContext";
+import { doc, setDoc } from "firebase/firestore";
 import { connect } from "react-redux";
 import { increment, setAuth } from "../../redux/actions";
-
-import 'react-toastify/dist/ReactToastify.css';
-
+import { throwToast } from "../../helpers/throwToast";
+import "react-toastify/dist/ReactToastify.css";
+import LoadingInButton from "../../animations/LoadingInButton";
 
 const PublicMember = (props) => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [id, setId] = useState("");
@@ -22,73 +23,25 @@ const PublicMember = (props) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const {register} = useAuth();
-
-  useEffect(()=>{
-    console.log(props.auth);
-  })
-
-  const throwToast = (type, message)=>{
-    switch(type){
-      case "success":
-        toast.success(message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          });
-      break;
-      case "warning": 
-      toast.warn(message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
-        break;
-        case "error":
-          toast.warn(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            });
-        break;
-    }
-  }
+  const { register } = useAuth();
 
   const [isIPhone142Open, setIPhone142Open] = useState(false);
 
-
-
-  const onGroupButtonClick = useCallback(() => {
-    //sign up here
-    // Please sync "Home (1)" to the project
-  }, []);
-
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(password !== confirm){
-        throwToast("warning", "Passwords do not match");
-        return;
+    if (password.length < 8) {
+      throwToast("warning", "Password must be at least 8 characters long");
+      return;
+    }
+    if (password !== confirm) {
+      throwToast("warning", "Passwords do not match.");
+      return;
     }
 
-
-    try{
+    try {
+      setIsLoading(true);
       const userCred = await register(email, password);
-      const uid =  userCred.user.uid
+      const uid = userCred.user.uid;
       const userObj = {
         uid,
         fullName,
@@ -97,39 +50,22 @@ const PublicMember = (props) => {
         id,
         constituency,
         phone,
-        type: "p_mem"
-      }
+        profilePic: "",
+        type: "p_mem",
+        type_full: "Public Member",
+      };
 
       const userObjCreation = await setDoc(doc(db, "users", uid), userObj);
       props.setAuth(userObj);
       throwToast("success", "Account Successfully Created");
-    }catch(e){
+      navigate("/account");
+    } catch (e) {
       console.log(e);
       throwToast("error", e.message);
-    }finally{
-
+    } finally {
+      setIsLoading(false);
     }
-  }
-
-
-
-
-  const onGroupContainer5Click = useCallback(() => {
-    // Please sync "Account (Not Signed In)" to the project
-  }, []);
-
-  const onGroupContainer7Click = useCallback(() => {
-    navigate("/login")
-    // Please sync "Log in" to the project
-  }, []);
-
-  const onGroupContainer9Click = useCallback(() => {
-    // Please sync "Log in" to the project
-  }, []);
-
-  const onGroupContainer11Click = useCallback(() => {
-    // Please sync "Log in" to the project
-  }, []);
+  };
 
   const openIPhone142 = useCallback(() => {
     setIPhone142Open(true);
@@ -199,225 +135,222 @@ const PublicMember = (props) => {
           Sign Up as a Public Member
         </div>
 
-<form onSubmit={handleSubmit}>
-
-
-
-        <input
-          style={{
-            position: "absolute",
-            top: "324px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-          className="inputt"
-          id="email"
-          type="email"
-          placeholder="example@email.com"
-          required
-          value={email}
-          onChange={(e)=>{setEmail(e.target.value)}}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "300px",
-            left: "40px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          Your Email Address
-        </div>
-
-        <input
-          style={{
-            position: "absolute",
-            top: "246px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-          className="inputt"
-          id="fullName"
-          type="text"
-          placeholder="First and Last Name"
-          required
-          value={fullName}
-          onChange={(e)=>{setFullName(e.target.value)}}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "220px",
-            left: "40px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          Your Full Name
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "509px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <input
             style={{
               position: "absolute",
-              top: "0px",
-              left: "0px",
-              borderRadius: "36px",
-              boxSizing: "border-box",
-              width: "331px",
-              height: "44.81px",
-            }}
-            type="text"
-            className="inputt"
-            id="constituency"
-            placeholder="Constituency Name"
-            value={constituency}
-            onChange={(e)=>{setConstituency(e.target.value)}}
-          />
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "656px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-        >
-          <input
-            style={{
-              position: "absolute",
-              top: "0px",
-              left: "0px",
-              boxSizing: "border-box",
+              top: "324px",
+              left: "30px",
               width: "331px",
               height: "44.81px",
             }}
             className="inputt"
-            id="phone"
-            type="number"
-            placeholder="0812345678"
+            id="email"
+            type="email"
+            placeholder="example@email.com"
             required
-            value={phone}
-            onChange={(e)=>{setPhone(e.target.value)}}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
-        </div>
-        <input
-          style={{
-            position: "absolute",
-            top: "414px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-          className="inputt"
-          id="idnum"
-          type="number"
-          placeholder="ID Number"
-          required
-          value={id}
-          onChange={(e)=>{setId(e.target.value)}}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "390px",
-            left: "40px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          Your ID Number
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "390px",
-            left: "40px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          Your ID Number
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "480px",
-            left: "40px",
-            width: "246px",
-            height: "18px",
-            textAlign: "left",
-            fontSize: "12px",
-          }}
-        >
           <div
             style={{
               position: "absolute",
-              top: "0px",
-              left: "0px",
+              top: "300px",
+              left: "40px",
+              fontSize: "12px",
               fontWeight: "500",
+              textAlign: "left",
             }}
           >
-            Your Constituency (tap select to search)
+            Your Email Address
           </div>
-        </div>
-        <img
-          style={{
-            position: "absolute",
-            height: "1.06%",
-            width: "1.21%",
-            top: "98.86%",
-            right: "12.89%",
-            bottom: "0.08%",
-            left: "85.9%",
-            maxWidth: "100%",
-            overflow: "hidden",
-            maxHeight: "100%",
-          }}
-          alt=""
-          src="/vector.svg"
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "1124px",
-            left: "28px",
-            width: "331px",
-            height: "44.81px",
-            color: "#fff",
-          }}
-        >
-          <button
+
+          <input
             style={{
-              cursor: "pointer",
-              border: "none",
-              padding: "0",
-              backgroundColor: "transparent",
               position: "absolute",
-              top: "0px",
-              left: "0px",
+              top: "246px",
+              left: "30px",
               width: "331px",
               height: "44.81px",
             }}
-            onClick={onGroupButtonClick}
+            className="inputt"
+            id="fullName"
+            type="text"
+            placeholder="First and Last Name"
+            required
+            value={fullName}
+            onChange={(e) => {
+              setFullName(e.target.value);
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "220px",
+              left: "40px",
+              fontSize: "12px",
+              fontWeight: "500",
+              textAlign: "left",
+            }}
+          >
+            Your Full Name
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "509px",
+              left: "30px",
+              width: "331px",
+              height: "44.81px",
+            }}
+          >
+            <input
+              style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                borderRadius: "36px",
+                boxSizing: "border-box",
+                width: "331px",
+                height: "44.81px",
+              }}
+              type="text"
+              className="inputt"
+              id="constituency"
+              placeholder="Constituency Name"
+              value={constituency}
+              onChange={(e) => {
+                setConstituency(e.target.value);
+              }}
+            />
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "656px",
+              left: "30px",
+              width: "331px",
+              height: "44.81px",
+            }}
+          >
+            <input
+              style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                boxSizing: "border-box",
+                width: "331px",
+                height: "44.81px",
+              }}
+              className="inputt"
+              id="phone"
+              type="number"
+              placeholder="0812345678"
+              required
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
+            />
+          </div>
+          <input
+            style={{
+              position: "absolute",
+              top: "414px",
+              left: "30px",
+              width: "331px",
+              height: "44.81px",
+            }}
+            className="inputt"
+            id="idnum"
+            type="number"
+            placeholder="ID Number"
+            required
+            value={id}
+            onChange={(e) => {
+              setId(e.target.value);
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "390px",
+              left: "40px",
+              fontSize: "12px",
+              fontWeight: "500",
+              textAlign: "left",
+            }}
+          >
+            Your ID Number
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "390px",
+              left: "40px",
+              fontSize: "12px",
+              fontWeight: "500",
+              textAlign: "left",
+            }}
+          >
+            Your ID Number
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "480px",
+              left: "40px",
+              width: "246px",
+              height: "18px",
+              textAlign: "left",
+              fontSize: "12px",
+            }}
           >
             <div
               style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                fontWeight: "500",
+              }}
+            >
+              Your Constituency (tap select to search)
+            </div>
+          </div>
+          <img
+            style={{
+              position: "absolute",
+              height: "1.06%",
+              width: "1.21%",
+              top: "98.86%",
+              right: "12.89%",
+              bottom: "0.08%",
+              left: "85.9%",
+              maxWidth: "100%",
+              overflow: "hidden",
+              maxHeight: "100%",
+            }}
+            alt=""
+            src="/vector.svg"
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "1124px",
+              left: "28px",
+              width: "331px",
+              height: "44.81px",
+              color: "#fff",
+            }}
+          >
+            <button
+              style={{
+                cursor: "pointer",
+                border: "none",
+                padding: "0",
+                backgroundColor: "transparent",
                 position: "absolute",
                 top: "0px",
                 left: "0px",
@@ -425,435 +358,445 @@ const PublicMember = (props) => {
                 height: "44.81px",
               }}
             >
-              <button
+              <div
                 style={{
-                  cursor: "pointer",
-                  border: "none",
-                  padding: "0",
-                  backgroundColor: "#1f6603",
                   position: "absolute",
                   top: "0px",
                   left: "0px",
-                  borderRadius: "36px",
                   width: "331px",
                   height: "44.81px",
                 }}
-                type="submit"
-              />
+              >
+                <button
+                  style={{
+                    cursor: "pointer",
+                    border: "none",
+                    padding: "0",
+                    backgroundColor: "#1f6603",
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    borderRadius: "36px",
+                    width: "331px",
+                    height: "44.81px",
+                  }}
+                  type="submit"
+                />
+              </div>
+            </button>
+            <div
+              style={{
+                position: "absolute",
+                top: "9px",
+                left: "109px",
+                display: "inline-block",
+                width: "114.03px",
+                height: "26.23px",
+                pointerEvents: "none",
+              }}
+            >
+              {isLoading ? (
+                <LoadingInButton
+                  style={{ position: "absolute", top: "-20px" }}
+                />
+              ) : (
+                "Sign Up"
+              )}
             </div>
-          </button>
-          <div
-            style={{
-              position: "absolute",
-              top: "9px",
-              left: "109px",
-              display: "inline-block",
-              width: "114.03px",
-              height: "26.23px",
-            pointerEvents: "none"
-            }}
-          >
-            Sign Up
           </div>
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "47px",
-            left: "32px",
-            width: "25px",
-            height: "23px",
-            cursor: "pointer",
-          }}
-          onClick={onGroupContainer5Click}
-        >
           <div
             style={{
               position: "absolute",
-              top: "0px",
-              left: "0px",
-              backgroundColor: "#fff",
+              top: "47px",
+              left: "32px",
               width: "25px",
               height: "23px",
-            }}
-          />
-          <img
-            style={{
-              position: "absolute",
-              top: "3px",
-              left: "6px",
-              width: "10.37px",
-              height: "18px",
-            }}
-            alt=""
-            src="/-icon-chevron-left.svg"
-          />
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "1196px",
-            left: "116px",
-            fontSize: "12px",
-            fontWeight: "500",
-          }}
-        >
-          Already have an account?
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "1229px",
-            left: "138px",
-            width: "115px",
-            height: "44.81px",
-            cursor: "pointer",
-          }}
-          onClick={onGroupContainer7Click}
-        >
-          <button
-            style={{
               cursor: "pointer",
-              border: "none",
-              padding: "0",
-              backgroundColor: "transparent",
-              position: "absolute",
-              top: "0px",
-              left: "0px",
-              width: "115px",
-              height: "44.81px",
             }}
-            type="button"
           >
             <div
               style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                backgroundColor: "#fff",
+                width: "25px",
+                height: "23px",
+              }}
+            />
+            <img
+              style={{
+                position: "absolute",
+                top: "3px",
+                left: "6px",
+                width: "10.37px",
+                height: "18px",
+              }}
+              alt=""
+              src="/-icon-chevron-left.svg"
+            />
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "1196px",
+              left: "116px",
+              fontSize: "12px",
+              fontWeight: "500",
+            }}
+          >
+            Already have an account?
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "1229px",
+              left: "138px",
+              width: "115px",
+              height: "44.81px",
+              cursor: "pointer",
+            }}
+          >
+            <button
+              style={{
+                cursor: "pointer",
+                border: "none",
+                padding: "0",
+                backgroundColor: "transparent",
                 position: "absolute",
                 top: "0px",
                 left: "0px",
                 width: "115px",
                 height: "44.81px",
               }}
+              type="button"
             >
               <div
                 style={{
                   position: "absolute",
                   top: "0px",
                   left: "0px",
-                  borderRadius: "36px",
-                  backgroundColor: "#dcc091",
                   width: "115px",
                   height: "44.81px",
                 }}
-              />
-            </div>
-          </button>
-          <div
-            style={{
-              position: "absolute",
-              top: "9px",
-              left: "27px",
-              display: "inline-block",
-              width: "60px",
-              height: "26px",
-            }}
-          >
-            Log in
-          </div>
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "1034px",
-            left: "40px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          Confirm Your Password
-        </div>
-        <input
-          style={{
-            position: "absolute",
-            top: "1058px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-          className="inputt"
-          id="confirm-password"
-          type="password"
-          placeholder="Confirm Password"
-          required
-          value={confirm}
-          onChange={(e)=>{setConfirm(e.target.value)}}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "944px",
-            left: "40px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          Create a Password
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "636px",
-            left: "37px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          Your Phone Number
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "720px",
-            left: "27px",
-            width: "228px",
-            height: "44.81px",
-            cursor: "pointer",
-          }}
-          onClick={onGroupContainer9Click}
-        >
-          <button
-            style={{
-              cursor: "pointer",
-              border: "none",
-              padding: "0",
-              backgroundColor: "transparent",
-              position: "absolute",
-              top: "0px",
-              left: "0px",
-              width: "228px",
-              height: "44.81px",
-            }}
-            type="button"
-
-          >
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    borderRadius: "36px",
+                    backgroundColor: "#dcc091",
+                    width: "115px",
+                    height: "44.81px",
+                  }}
+                />
+              </div>
+            </button>
             <div
               style={{
                 position: "absolute",
-                top: "0px",
-                left: "0px",
-                width: "228px",
-                height: "44.81px",
+                top: "9px",
+                left: "27px",
+                display: "inline-block",
+                width: "60px",
+                height: "26px",
               }}
             >
-              <button
-                style={{
-                  cursor: "pointer",
-                  border: "none",
-                  padding: "0",
-                  backgroundColor: "#dcc091",
-                  position: "absolute",
-                  top: "0px",
-                  left: "0px",
-                  borderRadius: "36px",
-                  width: "228px",
-                  height: "44.81px",
-                }}
-            type="button"
-
-              />
+              Log in
             </div>
-          </button>
+          </div>
           <div
             style={{
               position: "absolute",
-              top: "9px",
-              left: "21px",
-              display: "inline-block",
-              width: "185px",
-              height: "26px",
+              top: "1034px",
+              left: "40px",
+              fontSize: "12px",
+              fontWeight: "500",
+              textAlign: "left",
             }}
           >
-            Send Verification Code
+            Confirm Your Password
           </div>
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "791px",
-            left: "37px",
-            fontSize: "12px",
-            fontWeight: "500",
-            textAlign: "left",
-          }}
-        >
-          We Sent You a Verification Code, Please Enter it Below
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "875px",
-            left: "27px",
-            width: "228px",
-            height: "44.81px",
-            cursor: "pointer",
-            textAlign: "left",
-          }}
-          onClick={onGroupContainer11Click}
-        >
-          <button
+          <input
             style={{
-              cursor: "pointer",
-              border: "none",
-              padding: "0",
-              backgroundColor: "transparent",
               position: "absolute",
-              top: "0px",
-              left: "0px",
-              width: "228px",
+              top: "1058px",
+              left: "30px",
+              width: "331px",
               height: "44.81px",
             }}
-            type="button"
-
+            className="inputt"
+            id="confirm-password"
+            type="password"
+            placeholder="Confirm Password"
+            required
+            value={confirm}
+            onChange={(e) => {
+              setConfirm(e.target.value);
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "944px",
+              left: "40px",
+              fontSize: "12px",
+              fontWeight: "500",
+              textAlign: "left",
+            }}
           >
-            <div
+            Create a Password
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "636px",
+              left: "37px",
+              fontSize: "12px",
+              fontWeight: "500",
+              textAlign: "left",
+            }}
+          >
+            Your Phone Number
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "720px",
+              left: "27px",
+              width: "228px",
+              height: "44.81px",
+              cursor: "pointer",
+            }}
+          >
+            <button
               style={{
+                cursor: "pointer",
+                border: "none",
+                padding: "0",
+                backgroundColor: "transparent",
                 position: "absolute",
                 top: "0px",
                 left: "0px",
                 width: "228px",
                 height: "44.81px",
               }}
+              type="button"
             >
               <div
                 style={{
                   position: "absolute",
                   top: "0px",
                   left: "0px",
-                  borderRadius: "36px",
-                  backgroundColor: "#dcc091",
                   width: "228px",
                   height: "44.81px",
                 }}
-              />
+              >
+                <button
+                  style={{
+                    cursor: "pointer",
+                    border: "none",
+                    padding: "0",
+                    backgroundColor: "#dcc091",
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    borderRadius: "36px",
+                    width: "228px",
+                    height: "44.81px",
+                  }}
+                  type="button"
+                />
+              </div>
+            </button>
+            <div
+              style={{
+                position: "absolute",
+                top: "9px",
+                left: "21px",
+                display: "inline-block",
+                width: "185px",
+                height: "26px",
+              }}
+            >
+              Send Verification Code
             </div>
-          </button>
+          </div>
           <div
             style={{
               position: "absolute",
-              top: "9px",
-              left: "21px",
-              display: "inline-block",
-              width: "207px",
-              height: "26px",
+              top: "791px",
+              left: "37px",
+              fontSize: "12px",
+              fontWeight: "500",
+              textAlign: "left",
             }}
           >
-            Confirm Phone Number
+            We Sent You a Verification Code, Please Enter it Below
           </div>
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "570px",
-            left: "30px",
-            width: "105px",
-            height: "44.81px",
-            cursor: "pointer",
-          }}
-          onClick={openIPhone142}
-        >
-          <button
+          <div
             style={{
-              cursor: "pointer",
-              border: "none",
-              padding: "0",
-              backgroundColor: "transparent",
               position: "absolute",
-              top: "0px",
-              left: "0px",
-              width: "105px",
+              top: "875px",
+              left: "27px",
+              width: "228px",
               height: "44.81px",
+              cursor: "pointer",
+              textAlign: "left",
             }}
-            type="button"
-
           >
+            <button
+              style={{
+                cursor: "pointer",
+                border: "none",
+                padding: "0",
+                backgroundColor: "transparent",
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: "228px",
+                height: "44.81px",
+              }}
+              type="button"
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  top: "0px",
+                  left: "0px",
+                  width: "228px",
+                  height: "44.81px",
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    borderRadius: "36px",
+                    backgroundColor: "#dcc091",
+                    width: "228px",
+                    height: "44.81px",
+                  }}
+                />
+              </div>
+            </button>
             <div
               style={{
+                position: "absolute",
+                top: "9px",
+                left: "21px",
+                display: "inline-block",
+                width: "207px",
+                height: "26px",
+              }}
+            >
+              Confirm Phone Number
+            </div>
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: "570px",
+              left: "30px",
+              width: "105px",
+              height: "44.81px",
+              cursor: "pointer",
+            }}
+            onClick={openIPhone142}
+          >
+            <button
+              style={{
+                cursor: "pointer",
+                border: "none",
+                padding: "0",
+                backgroundColor: "transparent",
                 position: "absolute",
                 top: "0px",
                 left: "0px",
                 width: "105px",
                 height: "44.81px",
               }}
+              type="button"
             >
               <div
                 style={{
                   position: "absolute",
                   top: "0px",
                   left: "0px",
-                  borderRadius: "36px",
-                  backgroundColor: "#dcc091",
                   width: "105px",
                   height: "44.81px",
                 }}
-              />
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "0px",
+                    left: "0px",
+                    borderRadius: "36px",
+                    backgroundColor: "#dcc091",
+                    width: "105px",
+                    height: "44.81px",
+                  }}
+                />
+              </div>
+            </button>
+            <div
+              style={{
+                position: "absolute",
+                top: "9px",
+                left: "15px",
+                display: "inline-block",
+                width: "75px",
+                height: "26px",
+              }}
+            >
+              Search
             </div>
-          </button>
+          </div>
+          <input
+            style={{
+              position: "absolute",
+              top: "820px",
+              left: "30px",
+              width: "331px",
+              height: "44.81px",
+            }}
+            className="inputt"
+            id="verify"
+            type="text"
+            placeholder="Verification Code"
+          />
+          <input
+            style={{
+              position: "absolute",
+              top: "973px",
+              left: "30px",
+              width: "331px",
+              height: "44.81px",
+            }}
+            className="inputt"
+            id="password"
+            type="password"
+            placeholder="Mimimum 8 Characters"
+            required
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
           <div
             style={{
               position: "absolute",
-              top: "9px",
-              left: "15px",
-              display: "inline-block",
-              width: "75px",
-              height: "26px",
+              top: "784px",
+              left: "38px",
+              backgroundColor: "rgba(217, 217, 217, 0)",
+              width: "83px",
+              height: "40px",
             }}
-          >
-            Search
-          </div>
-        </div>
-        <input
-          style={{
-            position: "absolute",
-            top: "820px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-          className="inputt"
-          id="verify"
-          type="text"
-          placeholder="Verification Code"
-        />
-        <input
-          style={{
-            position: "absolute",
-            top: "973px",
-            left: "30px",
-            width: "331px",
-            height: "44.81px",
-          }}
-          className="inputt"
-          id="password"
-          type="password"
-          placeholder="Mimimum 8 Characters"
-          required
-          value={password}
-          onChange={(e)=>{setPassword(e.target.value)}}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "784px",
-            left: "38px",
-            backgroundColor: "rgba(217, 217, 217, 0)",
-            width: "83px",
-            height: "40px",
-          }}
-        />
-
-</form>
+          />
+        </form>
       </div>
       {isIPhone142Open && (
         <PortalPopup
@@ -864,7 +807,7 @@ const PublicMember = (props) => {
           <IPhone142 onClose={closeIPhone142} />
         </PortalPopup>
       )}
-       <ToastContainer />
+      <ToastContainer />
     </>
   );
 };
@@ -883,7 +826,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PublicMember);
+export default connect(mapStateToProps, mapDispatchToProps)(PublicMember);

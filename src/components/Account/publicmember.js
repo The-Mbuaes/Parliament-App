@@ -6,13 +6,10 @@ import Button from '@mui/joy/Button';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import {useAuth} from "../../context/AuthContext";
-
-
-
+import {auth} from "../../firebase";
+import { signOut } from 'firebase/auth';
 
 const AccountPagePublicMember = (props) => {
-  const {register, login,signOut } = useAuth();
-  console.log(register);
 
   return (
     <div className="fadein">
@@ -22,7 +19,7 @@ const AccountPagePublicMember = (props) => {
         <h2 className="header-text u-margin-bottom-small">Douglas  Masho</h2>
         <div className="roww" style={{justifyContent: "space-between"}}>
         <Button startDecorator={<ModeEditIcon />} style={{ borderRadius: 50, marginRight: "10px" }} onClick={()=>{}}>Edit Profile</Button> <br/>
-        <Button startDecorator={<CancelIcon />} style={{ borderRadius: 50 }} onClick={()=>{}} color="danger" variant="soft">Sign Out</Button> <br/>
+        <Button startDecorator={<CancelIcon />} style={{ borderRadius: 50 }} onClick={()=>{signOut(auth); props.setAuth(null)}} color="danger" variant="soft">Sign Out</Button> <br/>
         </div>
       </div>
       

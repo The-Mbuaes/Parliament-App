@@ -1,11 +1,14 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {connect} from "react-redux";
 import Button from '@mui/joy/Button';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-const AccountNull = () => {
+const AccountNull = (props) => {
+    useEffect(()=>{
+        console.log(props.auth);
+    })
     const navigate = useNavigate();
     return (
         <div className="page">
