@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import Button from '@mui/joy/Button';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import { connect } from "react-redux";
 
-const SignUp = () => {
+const SignUp = (props) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -16,6 +18,9 @@ const SignUp = () => {
       .then((usercred) => console.log(usercred))
       .catch((e) => console.log(e));
   };
+  if(props.auth){
+    return <Navigate to="/account"/>
+  }
   return (
     <div className="page">
         <h3 className='header-text u-margin-bottom'>Account</h3>
@@ -49,4 +54,9 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+const mapStateToProps = (state) => ({
+  //this is the state in the store ///this will take the state from the store and put it as props in the component that is being connected
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(SignUp);

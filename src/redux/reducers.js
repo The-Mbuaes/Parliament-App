@@ -23,6 +23,7 @@ const authReducer = (state = null, action) => {
   switch (action.type) {
     case "SET_AUTH":
       return action.authObj;
+      break;
     default: return state
   }
 };
