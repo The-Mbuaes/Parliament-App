@@ -1,18 +1,20 @@
-import { useCallback, useState } from "react";
-import Pencil from "../../assets/home/-icon-pencil.svg";
+import {useState} from "react";
 import { connect } from "react-redux";
-import { increment, setAuth } from "../../redux/actions";
+import { setAuth } from "../../redux/actions";
 import Button from "@mui/joy/Button";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DoneIcon from '@mui/icons-material/Done';
-import { useAuth } from "../../context/AuthContext";
-import { auth, storage } from "../../firebase";
-import { signOut } from "firebase/auth";
 import Modal from "react-modal";
 import Avatar from "react-avatar-edit";
 import User from "../../assets/user.png";
-import { ref, uploadBytes, getDownloadURL, uploadString, uploadBytesResumable } from "firebase/storage";
+import { auth, storage, db } from "../../firebase";
+import { signOut } from "firebase/auth";
+import { ref, uploadBytes, getDownloadURL, } from "firebase/storage";
+import {doc, updateDoc} from "firebase/firestore";
+import Loading from "../../animations/Loading";
+import { throwToast } from "../../helpers/throwToast";
+import { ToastContainer } from "react-toastify";
 
 const customStyles = {
   content: {
@@ -33,6 +35,7 @@ const AccountPagePublicMember = (props) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [preview, setPreview] = useState(null);
   const [src, setSrc] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -56,15 +59,17 @@ const AccountPagePublicMember = (props) => {
   }
 
   function onBeforeFileLoad(elem) {
-    if (elem.target.files[0].size > 71680) {
-      alert("File is too big!");
-      elem.target.value = "";
-    }
+    // if (elem.target.files[0].size > 71680) {
+    //   console.log("iuiuhiu")
+    //   throwToast("warning", "File is too big!");
+    //   elem.target.value = "";
+    // }
   }
 
 
   async function uploadImage(){
     try{
+      setIsLoading(true);
       const extension = preview.split(';')[0].split('/')[1];
 
       const base64Response = await fetch(preview);
@@ -77,15 +82,28 @@ const AccountPagePublicMember = (props) => {
         contentType: blob.type
       };
       const snapshot = await uploadBytes(storageRef,blob, metadata);
-
-      getDownloadURL(snapshot.ref).then( url => console.log(url));
+      const url = await getDownloadURL(snapshot.ref);
       //add image to auth obj on redux and on firebase
+      //firebase
+      const docref = doc(db, "users", props.auth.uid);
+      await updateDoc(docref, {
+        profilePic: url
+      });
+      //auth
+      props.setAuth({
+        ...props.auth,
+        profilePic: url
+      });
+      //throwToast
+      throwToast("success", "Profile Picture Successfully Updated");
+      //close modal
+      closeModal();
     }catch(e){
+      throwToast("error", e.message);
       console.log(e);
     }finally{
-
+      setIsLoading(false);
     }
-    
   }
 
   return (
@@ -94,11 +112,23 @@ const AccountPagePublicMember = (props) => {
         className="roww u-margin-bottom-small u-margin-top"
         style={{ justifyContent: "space-around" }}
       >
-        <div
+        {
+          props.auth?.profilePic === "" ?  
+          <div
           className="account__pic"
           alt="Profile picture"
           onClick={openModal}
+          style={{backgroundImage: "url(" + "https://i.ibb.co/ZTNqN7L/user.png" + ")"}}
         ></div>
+          :
+          <div
+          className="account__pic"
+          alt="Profile picture"
+          onClick={openModal}
+          style={{backgroundImage: `url(${props.auth.profilePic})`}}
+        ></div>
+        }
+
         <div className="column">
           <h2 className="header-text u-margin-bottom-small">
             {props.auth.fullName}
@@ -134,7 +164,7 @@ const AccountPagePublicMember = (props) => {
           <h3 style={{ fontWeight: "500" }}>Account Details</h3>
         </div>
       </div>
-      <div style={{ padding: "12px" }}>
+      <div style={{ padding: "12px" }} className="u-margin-borrom">
         {/* <div className="account__detail">
         Name: {props.auth.fullName}
       </div> */}
@@ -147,6 +177,7 @@ const AccountPagePublicMember = (props) => {
           Constituency: {props.auth.constituency}
         </div>
       </div>
+
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -177,36 +208,36 @@ const AccountPagePublicMember = (props) => {
             onBeforeFileLoad={onBeforeFileLoad}
             src={src}
           />
-          {
-            preview ? <img src={preview} className="u-margin-top" alt="Preview" /> : null
-          }
-          
+
         </div>
-        <div className="center-hrz">
-        <Button
-          startDecorator={<DoneIcon />}
-          style={{ borderRadius: 50, marginRight: "10px" }}
-          onClick={uploadImage}
-        >
-          Save
-        </Button>
+        <div className="center-hrz--col">
+
+          {
+            isLoading ? <Loading/> :
+            <>
+          {
+            preview ? <img src={preview} className="u-margin-bottom account__preview" alt="Preview" /> : null
+          }
+            <Button startDecorator={<DoneIcon />} style={{ borderRadius: 50, marginRight: "10px" }} onClick={uploadImage}>Save</Button>
+            </>
+          }
+
         </div>
 
       </Modal>
+      <ToastContainer/>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   //this is the state in the store ///this will take the state from the store and put it as props in the component that is being connected
-  count: state.count,
   auth: state.auth,
 });
 
 const mapDispatchToProps = (dispatch) => {
   //this will allow you to dispatch actions from anywhere in the compoonent
   return {
-    increment: (num) => dispatch(increment(num)),
     setAuth: (user) => dispatch(setAuth(user)),
   };
 };

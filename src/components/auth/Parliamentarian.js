@@ -50,7 +50,6 @@ const Parliamentarian = (props) => {
         uid,
         fullName,
         email,
-
         id,
         phone,
         profilePic: "",
@@ -436,6 +435,7 @@ const Parliamentarian = (props) => {
             cursor: "pointer",
             fontSize: "16px",
           }}
+          onClick={()=>{navigate("/login")}}
         >
           <button
             id="login"

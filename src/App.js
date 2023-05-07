@@ -26,6 +26,7 @@ import LogIn from "./components/auth/Login";
 import AccountPagePublicMember from "./components/Account/publicmember";
 import AuthContextProvider from "./context/AuthContext";
 import Accountroot from "./components/Account/accountroot";
+import CreatePoll from "./components/Polls/CreatePoll";
 
 
 const theme = extendTheme({
@@ -156,7 +157,7 @@ function App() {
           <Route path="/signup/publicmember" element={<PublicMember/>} />
           <Route path="/login" element={<LogIn/>} />
           <Route path="/account" element={<Accountroot/>} />
-
+          <Route path="/createpoll" element={<CreatePoll/>} />
         </Routes>
       </CssVarsProvider>
 
