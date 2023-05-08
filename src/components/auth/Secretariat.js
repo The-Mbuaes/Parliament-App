@@ -433,6 +433,7 @@ const Secretariat = (props) => {
             cursor: "pointer",
             fontSize: "16px",
           }}
+          onClick={()=>{navigate("/login")}}
         >
           <button
             id="login"

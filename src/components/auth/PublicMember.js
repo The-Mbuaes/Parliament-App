@@ -462,6 +462,7 @@ const PublicMember = (props) => {
               height: "44.81px",
               cursor: "pointer",
             }}
+            onClick={()=>{navigate("/login")}}
           >
             <button
               style={{
@@ -476,6 +477,7 @@ const PublicMember = (props) => {
                 height: "44.81px",
               }}
               type="button"
+            onClick={()=>{navigate("/login")}}
             >
               <div
                 style={{

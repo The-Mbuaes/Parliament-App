@@ -16,7 +16,7 @@ body{
 
 
 .header-text{
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 700;
     text-transform: capitalize;
     font-family: "Poppins", sans-serif;
@@ -25,7 +25,7 @@ body{
     font-size: 4.5rem;
     }
     @include respond(phone){
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
     &--smaller{
     font-size: 2rem !important;

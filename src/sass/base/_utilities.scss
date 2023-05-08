@@ -18,7 +18,7 @@
     }
 
     &-tiny{
-      margin-bottom: 1rem !important; 
+      margin-bottom: 5px !important; 
     }
     &-medium{
       margin-bottom: 3rem !important; 
@@ -116,8 +116,11 @@
 
 
 .u-padding{
-  padding: 3rem;
+  padding: 1rem;
   &-bottom{
+    &-big{
+      padding-bottom: 70px;
+    }
     &--mobile{
       @include respond(phone){
         padding-bottom: 50px !important;
