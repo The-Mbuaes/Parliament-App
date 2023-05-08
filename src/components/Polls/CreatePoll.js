@@ -69,7 +69,7 @@ const CreatePoll = (props) => {
 
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: "18px" }}>
-              <label htmlfor="question">Survey Question</label>
+              <label htmlFor="question">Survey Question</label>
               <Input
                 placeholder="Your Question"
                 color="primary"
@@ -82,7 +82,7 @@ const CreatePoll = (props) => {
               />
             </div>
             <div className="u-margin-bottom-tiny">
-              <label htmlfor="option">Survey Options</label>
+              <label htmlFor="option">Survey Options</label>
               <Input
                 placeholder="Option"
                 color="primary"

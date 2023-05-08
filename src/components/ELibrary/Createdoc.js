@@ -65,6 +65,7 @@ const Createdoc = (props) => {
         setIsLoading(true);
         const url = await uploadFile();
         const docref = doc(db, "elibrary", docID);
+        const currentDate = new Date();
         await setDoc(docref, {
           docID,
           title,
@@ -72,7 +73,8 @@ const Createdoc = (props) => {
           description: description.replace(/\n\r?/g, "<br/>"),
           group,
           posted_by: props.auth.uid,
-          date: new Date(),
+          date: currentDate,
+          dateNum: currentDate.valueOf(),
           url,
         });
         throwToast("success", "Successfully added to the Elibrary");
@@ -98,7 +100,7 @@ const Createdoc = (props) => {
         ) : (
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: "18px" }}>
-              <label htmlfor="title">Document Title</label>
+              <label htmlFor="title">Document Title</label>
               <Input
                 placeholder="Enter Document Title"
                 color="primary"
@@ -111,7 +113,7 @@ const Createdoc = (props) => {
               />
             </div>
             <div style={{ marginBottom: "18px" }}>
-              <label htmlfor="title">Document Category</label>
+              <label htmlFor="title">Document Category</label>
               <Select
                 defaultValue="na_papers"
                 onChange={handleChange}
@@ -147,7 +149,7 @@ const Createdoc = (props) => {
               </Select>
             </div>
             <div style={{ marginBottom: "18px" }}>
-              <label htmlfor="group">Document Group</label>
+              <label htmlFor="group">Document Group</label>
               <Input
                 placeholder="e.g Budget 2023 - 2024"
                 color="primary"
@@ -160,7 +162,7 @@ const Createdoc = (props) => {
               />
             </div>
             <div style={{ marginBottom: "18px" }}>
-              <label htmlfor="description">Document Description</label>
+              <label htmlFor="description">Document Description</label>
               <Textarea
                 placeholder="Short Description of the Document"
                 color="primary"

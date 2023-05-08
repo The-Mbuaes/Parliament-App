@@ -1,21 +1,21 @@
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { setAuth } from "../../redux/actions";
 import Button from "@mui/joy/Button";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import DoneIcon from '@mui/icons-material/Done';
+import DoneIcon from "@mui/icons-material/Done";
 import Modal from "react-modal";
 import Avatar from "react-avatar-edit";
 import { auth, storage, db } from "../../firebase";
 import { signOut } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL, } from "firebase/storage";
-import {doc, updateDoc} from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, updateDoc, getDocs, query, where, doc, orderBy } from "firebase/firestore";
 import Loading from "../../animations/Loading";
 import { throwToast } from "../../helpers/throwToast";
 import { ToastContainer } from "react-toastify";
 import AddIcon from "@mui/icons-material/Add";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ThumbnailSec from "../ELibrary/ThumbNailSec";
 
 const customStyles = {
@@ -38,7 +38,9 @@ const AccountPagePublicMember = (props) => {
   const [preview, setPreview] = useState(null);
   const [src, setSrc] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
   const navigate = useNavigate();
+  const [docs, setDocs] = useState([]);
 
   function openModal() {
     setIsOpen(true);
@@ -69,68 +71,91 @@ const AccountPagePublicMember = (props) => {
     // }
   }
 
+  useEffect(()=>{
+    getDocuments();
+  }, [])
 
-  async function uploadImage(){
-    try{
+  const getDocuments = async () => {
+    try {
+      setIsLoading2(true);
+      const docRef = collection(db, "elibrary");
+      const q = query(docRef, where("posted_by", "==", props.auth.uid));
+      const querySnapshot = await getDocs(q);
+      const docArr = [];
+      querySnapshot.forEach((doc) => {
+        docArr.push(doc.data());
+      });
+      setDocs(docArr.sort((a,b)=>b.dateNum-a.dateNum));
+    } catch (e) {
+      throwToast("error", "Error Fetching Documents");
+      console.log(e);
+    } finally {
+      setIsLoading2(false);
+    }
+  };
+
+  async function uploadImage() {
+    try {
       setIsLoading(true);
-      const extension = preview.split(';')[0].split('/')[1];
+      const extension = preview.split(";")[0].split("/")[1];
 
       const base64Response = await fetch(preview);
       const blob = await base64Response.blob();
       const storageRef = ref(storage, `avatars/${props.auth.uid}.${extension}`);
 
-
-      console.log(blob.type)
+      console.log(blob.type);
       const metadata = {
-        contentType: blob.type
+        contentType: blob.type,
       };
-      const snapshot = await uploadBytes(storageRef,blob, metadata);
+      const snapshot = await uploadBytes(storageRef, blob, metadata);
       const url = await getDownloadURL(snapshot.ref);
       //add image to auth obj on redux and on firebase
       //firebase
       const docref = doc(db, "users", props.auth.uid);
       await updateDoc(docref, {
-        profilePic: url
+        profilePic: url,
       });
       //auth
       props.setAuth({
         ...props.auth,
-        profilePic: url
+        profilePic: url,
       });
       //throwToast
       throwToast("success", "Profile Picture Successfully Updated");
       //close modal
       closeModal();
-    }catch(e){
+    } catch (e) {
       throwToast("error", e.message);
       console.log(e);
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <div className="fadein pagepadding" style={{paddingBottom: "50px"}}>
+    <div className="fadein pagepadding" style={{ paddingBottom: "50px" }}>
       <div
         className="column u-margin-bottom-small u-margin-top"
         style={{ alignItems: "center", textAlign: "center" }}
       >
-        {
-          props.auth?.profilePic === "" ?  
+        {props.auth?.profilePic === "" ? (
           <div
-          className="account__pic"
-          alt="Profile picture"
-          onClick={openModal}
-          style={{backgroundImage: "url(" + "https://i.ibb.co/ZTNqN7L/user.png" + ")"}}
-        ></div>
-          :
+            className="account__pic"
+            alt="Profile picture"
+            onClick={openModal}
+            style={{
+              backgroundImage:
+                "url(" + "https://i.ibb.co/ZTNqN7L/user.png" + ")",
+            }}
+          ></div>
+        ) : (
           <div
-          className="account__pic"
-          alt="Profile picture"
-          onClick={openModal}
-          style={{backgroundImage: `url(${props.auth.profilePic})`}}
-        ></div>
-        }
+            className="account__pic"
+            alt="Profile picture"
+            onClick={openModal}
+            style={{ backgroundImage: `url(${props.auth.profilePic})` }}
+          ></div>
+        )}
 
         <div className="column">
           <h2 className="header-text u-margin-bottom-small">
@@ -179,7 +204,9 @@ const AccountPagePublicMember = (props) => {
       </div>
 
       <div style={{ padding: "12px" }}>
-        <h2 className="header-text u-margin-bottom-small">My E-Library documents</h2>
+        <h2 className="header-text u-margin-bottom-small">
+          My E-Library documents
+        </h2>
         <Button
           startDecorator={<AddIcon />}
           style={{ borderRadius: 50, marginRight: "10px" }}
@@ -190,8 +217,14 @@ const AccountPagePublicMember = (props) => {
           Add document
         </Button>
       </div>
+
       <div className="">
-        <ThumbnailSec/>
+        {
+          isLoading2 ? <Loading/> :
+          <>
+          {docs.map(doc=> <ThumbnailSec key={doc.docID} id={doc.docID} document={doc} setIsLoading={setIsLoading2} getDocuments={getDocuments}/>)}
+          </>
+        }
       </div>
 
       <Modal
@@ -224,24 +257,31 @@ const AccountPagePublicMember = (props) => {
             onBeforeFileLoad={onBeforeFileLoad}
             src={src}
           />
-
         </div>
         <div className="center-hrz--col">
-
-          {
-            isLoading ? <Loading/> :
+          {isLoading ? (
+            <Loading />
+          ) : (
             <>
-          {
-            preview ? <img src={preview} className="u-margin-bottom account__preview" alt="Preview" /> : null
-          }
-            <Button startDecorator={<DoneIcon />} style={{ borderRadius: 50, marginRight: "10px" }} onClick={uploadImage}>Save</Button>
+              {preview ? (
+                <img
+                  src={preview}
+                  className="u-margin-bottom account__preview"
+                  alt="Preview"
+                />
+              ) : null}
+              <Button
+                startDecorator={<DoneIcon />}
+                style={{ borderRadius: 50, marginRight: "10px" }}
+                onClick={uploadImage}
+              >
+                Save
+              </Button>
             </>
-          }
-
+          )}
         </div>
-
       </Modal>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

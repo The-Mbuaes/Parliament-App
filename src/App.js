@@ -20,6 +20,7 @@ import AllPolls from "./components/Polls/AllPolls";
 import PSU from "./components/auth/PSU";
 import TheNV from "./components/The Namibian Voice/TheNV";
 import Createdoc from "./components/ELibrary/Createdoc";
+import Editdoc from "./components/ELibrary/Editdoc";
 
 
 const theme = extendTheme({
@@ -154,6 +155,7 @@ function App() {
           <Route path="/surveys" element={<AllPolls/>} />
           <Route path="/thenamibianvoice" element={<TheNV/>} />
           <Route path="/createdoc" element={<Createdoc/>} />
+          <Route path="/editdoc/:docid" element={<Editdoc/>} />
           <Route path="/psu">
           <Route path=":type" element={<PSU/>} />
           </Route>

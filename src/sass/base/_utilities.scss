@@ -118,6 +118,9 @@
 .u-padding{
   padding: 1rem;
   &-bottom{
+    &-big{
+      padding-bottom: 70px;
+    }
     &--mobile{
       @include respond(phone){
         padding-bottom: 50px !important;
