@@ -1,17 +1,7 @@
 import React, { useState } from "react";
-import AuthDetails from "./components/auth/AuthDetails";
-import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
-import {
-  createTheme,
-  ThemeProvider,
-  ThemeCssVar,
-  CssVarsTheme,
-} from "@mui/material";
 import { extendTheme, CssVarsProvider } from "@mui/joy/styles";
-import { connect } from "react-redux";
-import { increment, setAuth } from "./redux/actions";
-import { Link, Route, Routes , useNavigate} from "react-router-dom";
+import {  Route, Routes , useNavigate} from "react-router-dom";
 import Home from "./components/Home";
 import { BottomNavigation } from "@mui/material";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -23,10 +13,13 @@ import Parliamentarian from "./components/auth/Parliamentarian";
 import Secretariat from "./components/auth/Secretariat";
 import PublicMember from "./components/auth/PublicMember";
 import LogIn from "./components/auth/Login";
-import AccountPagePublicMember from "./components/Account/publicmember";
 import AuthContextProvider from "./context/AuthContext";
 import Accountroot from "./components/Account/accountroot";
 import CreatePoll from "./components/Polls/CreatePoll";
+import AllPolls from "./components/Polls/AllPolls";
+import PSU from "./components/auth/PSU";
+import TheNV from "./components/The Namibian Voice/TheNV";
+import Createdoc from "./components/ELibrary/Createdoc";
 
 
 const theme = extendTheme({
@@ -131,16 +124,16 @@ const theme = extendTheme({
   }
 });
 
-const newTheme = createTheme({
-  palette: {
-    primary: {
-      main: "#1F6603",
-    },
-    secondary: {
-      main: "#DCC091",
-    },
-  },
-});
+// const newTheme = createTheme({
+//   palette: {
+//     primary: {
+//       main: "#1F6603",
+//     },
+//     secondary: {
+//       main: "#DCC091",
+//     },
+//   },
+// });
 
 function App() {
   const [value, setValue] = useState(1);
@@ -158,6 +151,12 @@ function App() {
           <Route path="/login" element={<LogIn/>} />
           <Route path="/account" element={<Accountroot/>} />
           <Route path="/createpoll" element={<CreatePoll/>} />
+          <Route path="/surveys" element={<AllPolls/>} />
+          <Route path="/thenamibianvoice" element={<TheNV/>} />
+          <Route path="/createdoc" element={<Createdoc/>} />
+          <Route path="/psu">
+          <Route path=":type" element={<PSU/>} />
+          </Route>
         </Routes>
       </CssVarsProvider>
 
@@ -194,3 +193,5 @@ function App() {
 }
 
 export default App;
+
+

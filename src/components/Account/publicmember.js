@@ -7,7 +7,6 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DoneIcon from '@mui/icons-material/Done';
 import Modal from "react-modal";
 import Avatar from "react-avatar-edit";
-import User from "../../assets/user.png";
 import { auth, storage, db } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL, } from "firebase/storage";
@@ -109,8 +108,8 @@ const AccountPagePublicMember = (props) => {
   return (
     <div className="fadein">
       <div
-        className="roww u-margin-bottom-small u-margin-top"
-        style={{ justifyContent: "space-around" }}
+        className="column u-margin-bottom-small u-margin-top"
+        style={{ alignItems: "center", textAlign: "center" }}
       >
         {
           props.auth?.profilePic === "" ?  

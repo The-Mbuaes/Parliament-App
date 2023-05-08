@@ -7,7 +7,6 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DoneIcon from '@mui/icons-material/Done';
 import Modal from "react-modal";
 import Avatar from "react-avatar-edit";
-import User from "../../assets/user.png";
 import { auth, storage, db } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL, } from "firebase/storage";
@@ -15,6 +14,9 @@ import {doc, updateDoc} from "firebase/firestore";
 import Loading from "../../animations/Loading";
 import { throwToast } from "../../helpers/throwToast";
 import { ToastContainer } from "react-toastify";
+import AddIcon from "@mui/icons-material/Add";
+import {useNavigate} from "react-router-dom";
+import ThumbnailSec from "../ELibrary/ThumbNailSec";
 
 const customStyles = {
   content: {
@@ -36,6 +38,7 @@ const AccountPagePublicMember = (props) => {
   const [preview, setPreview] = useState(null);
   const [src, setSrc] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   function openModal() {
     setIsOpen(true);
@@ -107,10 +110,10 @@ const AccountPagePublicMember = (props) => {
   }
 
   return (
-    <div className="fadein">
+    <div className="fadein pagepadding" style={{paddingBottom: "50px"}}>
       <div
-        className="roww u-margin-bottom-small u-margin-top"
-        style={{ justifyContent: "space-around" }}
+        className="column u-margin-bottom-small u-margin-top"
+        style={{ alignItems: "center", textAlign: "center" }}
       >
         {
           props.auth?.profilePic === "" ?  
@@ -164,7 +167,7 @@ const AccountPagePublicMember = (props) => {
           <h3 style={{ fontWeight: "500" }}>Account Details</h3>
         </div>
       </div>
-      <div style={{ padding: "12px" }}>
+      <div style={{ padding: "12px" }} className="u-margin-bottom-small">
         {/* <div className="account__detail">
         Name: {props.auth.fullName}
       </div> */}
@@ -173,10 +176,24 @@ const AccountPagePublicMember = (props) => {
         </div>
         <div className="account__detail">ID Number: {props.auth.id}</div>
         <div className="account__detail">Phone Number: {props.auth.phone}</div>
-        <div className="account__detail">
-          Constituency: {props.auth.constituency}
-        </div>
       </div>
+
+      <div style={{ padding: "12px" }}>
+        <h2 className="header-text u-margin-bottom-small">My E-Library documents</h2>
+        <Button
+          startDecorator={<AddIcon />}
+          style={{ borderRadius: 50, marginRight: "10px" }}
+          onClick={() => {
+            navigate("/createdoc");
+          }}
+        >
+          Add document
+        </Button>
+      </div>
+      <div className="">
+        <ThumbnailSec/>
+      </div>
+
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}

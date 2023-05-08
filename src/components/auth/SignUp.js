@@ -26,9 +26,11 @@ const SignUp = (props) => {
         <h3 className='header-text u-margin-bottom'>Account</h3>
         <div className="center-hrz--col center-vert" style={{height: "70vh"}}>
         <p className="normal-text u-margin-bottom-small">Who are you signing up as?</p>
-        <Button onClick={()=>{navigate("/signup/parliamentarian")}} endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Parliamentarian</Button> <br/>
-        <Button onClick={()=>{navigate("/signup/secretariat")}} endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Secretariat</Button> <br/>
-        <Button onClick={()=>{navigate("/signup/publicmember")}} endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Public Member</Button> 
+        <div className="column u-padding">
+            <Button onClick={()=>{navigate("/signup/parliamentarian")}} endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Parliamentarian</Button> <br/>
+            <Button onClick={()=>{navigate("/signup/secretariat")}} endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Secretariat</Button> <br/>
+            <Button onClick={()=>{navigate("/signup/publicmember")}} endDecorator={<KeyboardArrowRight />} style={{ borderRadius: 50 }}>Public Member</Button> 
+        </div>
         </div>
       {/* <form className="form__margin">
         <div className="center-hrz--col">

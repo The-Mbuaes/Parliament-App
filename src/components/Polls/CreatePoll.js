@@ -18,7 +18,7 @@ const CreatePoll = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const inpRef = useRef(null);
 
-  if (props.auth.type !== "parl") {
+  if (!props.auth || props.auth.type !== "parl") {
     return <Navigate to="/" />;
   }
 
@@ -69,7 +69,7 @@ const CreatePoll = (props) => {
 
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: "18px" }}>
-              <label for="question">Survey Question</label>
+              <label htmlfor="question">Survey Question</label>
               <Input
                 placeholder="Your Question"
                 color="primary"
@@ -82,7 +82,7 @@ const CreatePoll = (props) => {
               />
             </div>
             <div className="u-margin-bottom-tiny">
-              <label for="option">Survey Options</label>
+              <label htmlfor="option">Survey Options</label>
               <Input
                 placeholder="Option"
                 color="primary"

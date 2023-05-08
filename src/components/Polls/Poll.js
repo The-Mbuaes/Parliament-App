@@ -14,6 +14,7 @@ const Poll = ({ data }) => {
   const [selectedValue, setSelectedValue] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [pollData, setPollData] = useState(data);
+  const [selected, setSelected] = useState("");
   const total = pollData.options.reduce((a, c) => {
     return a + c.votes_count;
   }, 0);
@@ -49,33 +50,36 @@ const Poll = ({ data }) => {
         </p>
       </div>
       <p className="poll__question">{pollData.question}</p>
-      <p className="poll__total">{total} Votes</p>
+      <p className="poll__total">
+        {total} Vote
+        {total > 1 || total == 0 ? <span>s</span> : <span></span>}
+      </p>
       <div className="poll__options u-margin-top-small">
         {isLoading ? (
           <Loading />
         ) : (
-          <RadioGroup
-            name="fruit"
-            selectedValue={selectedValue}
-            onChange={handleChange}
-          >
+          <>
             {pollData.options.map((opt) => {
-              // if(opt.text == "Nah bro jk"){
-                console.log(total);
-              // }
+              const classProp =
+                opt.id === selected
+                  ? "dot__container-active"
+                  : "dot__container";
               return (
-              <PollOption
-                label={opt.text}
-                percent={Math.round(((opt.votes_count)/ total) * 100)}
-                pollID={pollData.id}
-                optionID={opt.id}
-                numVotes={opt.votes_count}
-                key={opt.id}
-                setIsLoading={setIsLoading}
-                getResults={getResults}
-              />
-            )})}
-          </RadioGroup>
+                <PollOption
+                  label={opt.text}
+                  percent={Math.round((opt.votes_count / total) * 100)}
+                  pollID={pollData.id}
+                  optionID={opt.id}
+                  numVotes={opt.votes_count}
+                  key={opt.id}
+                  setIsLoading={setIsLoading}
+                  getResults={getResults}
+                  setSelected={setSelected}
+                  classProp={classProp}
+                />
+              );
+            })}
+          </>
         )}
       </div>
 

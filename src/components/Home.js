@@ -1,7 +1,7 @@
 import React,  { useCallback } from 'react'
 import {connect} from "react-redux";
 import { increment, setAuth  }  from "../redux/actions";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Vertical from "../assets/home/-icon-more-vertical-f.svg";
 import Group from "../assets/home/group.svg";
 import Rectangle72 from "../assets/home/rectangle-72.svg";
@@ -15,12 +15,10 @@ import NationalAssembly11 from "../assets/home/nounnationalassembly1416635-11.sv
 import IconEye from "../assets/home/-icon-eye.svg";
 import IconClock from "../assets/home/-icon-clock.svg";
 import IconStar from "../assets/home/-icon-star.svg";
-import IconHome from "../assets/home/-icon-home.svg";
-import Group31 from "../assets/home/group-31.svg";
-import Group34 from "../assets/home/group-34.svg";
 import "../css/home.scss"
 
 const Home = (props) => {
+  const navigate = useNavigate()
   const onGroupContainer4Click = useCallback(() => {
     // Please sync "National Assembly" to the project
   }, []);
@@ -30,7 +28,7 @@ const Home = (props) => {
   }, []);
 
   const onGroupContainer9Click = useCallback(() => {
-    // Please sync "The Namibia Voice" to the project
+    navigate("/thenamibianvoice")
   }, []);
 
   const onGroupContainer12Click = useCallback(() => {
@@ -89,6 +87,7 @@ const Home = (props) => {
         <img className="vector-icon" alt="" src={Vector} />
       </div>
       <div className="noun-national-assembly-buildin" />
+
       <div className="group-container" onClick={onGroupContainer9Click}>
         <div className="rectangle-parent">
           <img className="group-inner" alt="" src={Rectangle72} />
@@ -99,6 +98,7 @@ const Home = (props) => {
         </div>
         <img className="group-child2" alt="" src={Group328} />
       </div>
+
       <div
         className="noun-national-assembly-buildin-parent"
         onClick={onGroupContainer12Click}

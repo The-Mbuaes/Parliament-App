@@ -137,10 +137,10 @@ const AccountPagePublicMember = (props) => {
   }
 
   return (
-    <div className="fadein u-padding-bottom">
+    <div className="fadein u-padding-bottom pagepadding">
       <div
-        className="roww u-margin-bottom-small u-margin-top"
-        style={{ justifyContent: "space-around" }}
+        className="column u-margin-bottom-small u-margin-top"
+        style={{ alignItems: "center", textAlign: "center" }}
       >
         {props.auth?.profilePic === "" ? (
           <div
