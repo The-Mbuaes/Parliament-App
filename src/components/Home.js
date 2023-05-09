@@ -32,7 +32,7 @@ const Home = (props) => {
   }, []);
 
   const onGroupContainer12Click = useCallback(() => {
-    // Please sync "E-Library" to the project
+    navigate("/elibrary");
   }, []);
 
   const onGroupContainer15Click = useCallback(() => {

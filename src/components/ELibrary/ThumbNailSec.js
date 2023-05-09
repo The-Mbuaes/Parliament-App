@@ -32,8 +32,6 @@ const ThumbnailSec = ({ id, document, setIsLoading, getDocuments }) => {
     }catch(e){
       console.log(e);
       throwToast("error", "Error deleting document")
-    }finally{
-      setIsLoading(false);
     }
   }
 
@@ -57,7 +55,9 @@ const ThumbnailSec = ({ id, document, setIsLoading, getDocuments }) => {
         <div className="roww">
           <Button
             style={{ borderRadius: 50, marginRight: "10px" }}
-            onClick={() => {}}
+            onClick={() => {
+              navigate(`/doc/${document.docID}`);
+            }}
             variant="soft"
             color="neutral"
             sx={{ color: "black" }}

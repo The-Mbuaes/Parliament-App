@@ -1,13 +1,12 @@
 import React from "react";
 import Button from "@mui/joy/Button";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
 
-const ThumbnailSec = ({id,document}) => {
+const Thumbnail = ({id,document}) => {
   const navigate = useNavigate();
   return (
     <div className="thumbnail__container roww">
@@ -24,30 +23,21 @@ const ThumbnailSec = ({id,document}) => {
         <div className="roww">
         <Button
           style={{ borderRadius: 50, marginRight: "10px" }}
-          onClick={() => {}}
-          variant="soft"
-          color="neutral"
-          sx={{color: "black"}}
+          startDecorator={<VisibilityIcon/>}
+          onClick={() => {
+            navigate(`/doc/${document.docID}`);
+          }}
         >
-          <VisibilityIcon/>
+          Article Details
         </Button>
         <Button
           style={{ borderRadius: 50, marginRight: "10px" }}
           onClick={() => {navigate(`/editdoc/${document.docID}`)}}
           variant="soft"
-          color="neutral"
+          color="success"
           sx={{color: "black"}}
         >
-          <ModeEditIcon/>
-        </Button>
-
-        <Button
-          style={{ borderRadius: 50, marginRight: "10px" }}
-          onClick={() => {}}
-          variant="soft"
-          color="danger"
-        >
-          <DeleteIcon/>
+          <StarBorderIcon/>
         </Button>
         </div>
         
@@ -56,4 +46,4 @@ const ThumbnailSec = ({id,document}) => {
   );
 };
 
-export default ThumbnailSec;
+export default Thumbnail;
