@@ -15,6 +15,8 @@ const Poll = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [pollData, setPollData] = useState(data);
   const [selected, setSelected] = useState("");
+  const [showResults, setShowResults] = useState(false);
+
   const total = pollData.options.reduce((a, c) => {
     return a + c.votes_count;
   }, 0);
@@ -76,6 +78,8 @@ const Poll = ({ data }) => {
                   getResults={getResults}
                   setSelected={setSelected}
                   classProp={classProp}
+                  showResults={showResults}
+                  setShowResults={setShowResults}
                 />
               );
             })}
