@@ -4,10 +4,31 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
 
-const Thumbnail = ({id,document}) => {
+import { db } from "../../firebase";
+import { doc, updateDoc, arrayUnion, collection, getDocs,setDoc } from "firebase/firestore";
+import { throwToast } from "../../helpers/throwToast";
+import { ToastContainer } from "react-toastify";
+
+const Thumbnail = ({id,document, auth}) => {
   const navigate = useNavigate();
+
+  const addToFaves = async()=>{
+    try{
+      const docRef = doc(db, "favourites", auth.uid);
+      await updateDoc(docRef, {
+        elibrary:  arrayUnion(document)
+      })
+      throwToast("success", "Successfully added to favourites");
+      console.log(auth.uid);
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  
   return (
     <div className="thumbnail__container roww">
       <div className="thumbnail__date column">
@@ -32,7 +53,9 @@ const Thumbnail = ({id,document}) => {
         </Button>
         <Button
           style={{ borderRadius: 50, marginRight: "10px" }}
-          onClick={() => {navigate(`/editdoc/${document.docID}`)}}
+          onClick={() => {
+            addToFaves();
+          }}
           variant="soft"
           color="success"
           sx={{color: "black"}}
@@ -46,4 +69,13 @@ const Thumbnail = ({id,document}) => {
   );
 };
 
-export default Thumbnail;
+const mapStateToProps = (state) => ({
+  //this is the state in the store ///this will take the state from the store and put it as props in the component that is being connected
+  auth: state.auth,
+});
+
+
+export default connect(
+  mapStateToProps,
+
+)(Thumbnail);

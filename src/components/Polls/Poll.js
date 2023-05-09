@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import Logo from "../../assets/home/logo@2x.png";
 import PollOption from "./PollOption";
-import ProgressBar from "@ramonak/react-progress-bar";
-import { RadioGroup } from "react-radio-group";
+import { db } from "../../firebase";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import Loading from "../../animations/Loading";
 import Button from "@mui/joy/Button";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import moment from "moment";
 import { throwToast } from "../../helpers/throwToast";
 import { ToastContainer } from "react-toastify";
+import { connect } from "react-redux";
 
-const Poll = ({ data }) => {
+
+const Poll = ({ data, auth }) => {
   const [selectedValue, setSelectedValue] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [pollData, setPollData] = useState(data);
@@ -40,7 +42,19 @@ const Poll = ({ data }) => {
       setIsLoading(false);
     }
   };
-  const handleChange = () => {};
+  const addToFaves = async()=>{
+    try{
+      const docRef = doc(db, "favourites", auth.uid);
+      await updateDoc(docRef, {
+        surveys:  arrayUnion(data.id)
+      })
+      throwToast("success", "Successfully added to favourites");
+      console.log(auth.uid);
+    }catch(e){
+      console.log(e);
+    }
+  }
+
   return (
     <div className="poll__container u-margin-bottom-small">
       <div className="poll__header roww">
@@ -90,7 +104,9 @@ const Poll = ({ data }) => {
       <Button
         startDecorator={<StarBorderIcon />}
         style={{ borderRadius: 50 }}
-        onClick={() => {}}
+        onClick={() => {
+          addToFaves();
+        }}
         color="success"
         variant="soft"
       >
@@ -101,4 +117,13 @@ const Poll = ({ data }) => {
   );
 };
 
-export default Poll;
+const mapStateToProps = (state) => ({
+  //this is the state in the store ///this will take the state from the store and put it as props in the component that is being connected
+  auth: state.auth,
+});
+
+
+export default connect(
+  mapStateToProps,
+
+)(Poll);

@@ -12,8 +12,11 @@ import { throwToast } from "../../helpers/throwToast";
 import { ToastContainer } from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Modal } from "react-responsive-modal";
+import { db } from "../../firebase";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { connect } from "react-redux";
 
-const Poll2 = ({ data, setIsLoading,fetchPolls }) => {
+const Poll2 = ({ data, setIsLoading,fetchPolls, auth }) => {
   const [selectedValue, setSelectedValue] = useState();
   const [pollData, setPollData] = useState(data);
   const [selected, setSelected] = useState("");
@@ -24,6 +27,20 @@ const Poll2 = ({ data, setIsLoading,fetchPolls }) => {
   const total = pollData.options.reduce((a, c) => {
     return a + c.votes_count;
   }, 0);
+
+
+  const addToFaves = async()=>{
+    try{
+      const docRef = doc(db, "favourites", auth.uid);
+      await updateDoc(docRef, {
+        surveys:  arrayUnion(data.id)
+      })
+      throwToast("success", "Successfully added to favourites");
+      console.log(auth.uid);
+    }catch(e){
+      console.log(e);
+    }
+  }
 
   const deleteDocument = async()=>{
 
@@ -84,7 +101,9 @@ const Poll2 = ({ data, setIsLoading,fetchPolls }) => {
         <Button
           startDecorator={<StarBorderIcon />}
           style={{ borderRadius: 50, marginRight: "20px" }}
-          onClick={() => {}}
+          onClick={() => {
+            addToFaves();
+          }}
           color="success"
           variant="soft"
         >
@@ -128,4 +147,13 @@ const Poll2 = ({ data, setIsLoading,fetchPolls }) => {
   );
 };
 
-export default Poll2;
+const mapStateToProps = (state) => ({
+  //this is the state in the store ///this will take the state from the store and put it as props in the component that is being connected
+  auth: state.auth,
+});
+
+
+export default connect(
+  mapStateToProps,
+
+)(Poll2);

@@ -57,6 +57,10 @@ const PublicMember = (props) => {
       };
 
       const userObjCreation = await setDoc(doc(db, "users", uid), userObj);
+      await setDoc(doc(db, "favourites", uid), {
+        elibrary: [],
+        surveys: []
+      })
       props.setAuth(userObj);
       throwToast("success", "Account Successfully Created");
       navigate("/account");
