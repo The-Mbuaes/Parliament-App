@@ -15,7 +15,7 @@ import Loading from "../../animations/Loading";
 import { throwToast } from "../../helpers/throwToast";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import Poll from "../Polls/Poll";
+import Poll2 from "../Polls/Poll2";
 import AddIcon from "@mui/icons-material/Add";
 
 const customStyles = {
@@ -137,7 +137,7 @@ const AccountPagePublicMember = (props) => {
   }
 
   return (
-    <div className="fadein u-padding-bottom pagepadding">
+    <div className="fadein u-padding-bottom-big pagepadding">
       <div
         className="column u-margin-bottom-small u-margin-top"
         style={{ alignItems: "center", textAlign: "center" }}
@@ -224,9 +224,11 @@ const AccountPagePublicMember = (props) => {
         {isLoading2 ? (
           <Loading />
         ) : (
+
+
           <>
             {polls.map((poll) => (
-              <Poll data={poll} key={poll.id}/>
+              <Poll2 data={poll} key={poll.id} setIsLoading={setIsLoading2} fetchPolls={fetchPolls}/>
             ))}
           </>
         )}

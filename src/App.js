@@ -21,6 +21,11 @@ import PSU from "./components/auth/PSU";
 import TheNV from "./components/The Namibian Voice/TheNV";
 import Createdoc from "./components/ELibrary/Createdoc";
 import Editdoc from "./components/ELibrary/Editdoc";
+import ViewDoc from "./components/ELibrary/ViewDoc";
+import TestDoc from "./components/ELibrary/TestDoc";
+import ELHome from "./components/ELibrary/ELHome";
+import ParlPapers from "./components/ELibrary/ParlPapers";
+import AllDocs from "./components/ELibrary/AllDocs";
 
 
 const theme = extendTheme({
@@ -156,6 +161,10 @@ function App() {
           <Route path="/thenamibianvoice" element={<TheNV/>} />
           <Route path="/createdoc" element={<Createdoc/>} />
           <Route path="/editdoc/:docid" element={<Editdoc/>} />
+          <Route path="/doc/:docid" element={<ViewDoc/>} />
+          <Route path="/elibrary" element={<ELHome/>}/>
+          <Route path="/elibrary/parlpapers" element={<ParlPapers/>}/>
+          <Route path="/elibrary/docs/:doccat" element={<AllDocs/>}/>
           <Route path="/psu">
           <Route path=":type" element={<PSU/>} />
           </Route>

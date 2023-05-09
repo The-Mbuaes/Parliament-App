@@ -45,9 +45,11 @@ const AllPolls = (props) => {
           <Loading />
         ) : (
           <>
-            {polls.map((poll) => (
+            {polls.length > 0? polls.map((poll) => (
               <Poll data={poll} key={poll.id} />
-            ))}
+            )): <p>No results :(</p>
+          
+          }
           </>
         )}
       </div>

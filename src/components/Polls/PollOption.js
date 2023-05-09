@@ -17,6 +17,8 @@ const PollOption = ({
   auth,
   setSelected,
   classProp,
+  showResults,
+  setShowResults,
 }) => {
   const [value, setValue] = useState(0);
   useEffect(() => {
@@ -51,8 +53,8 @@ const PollOption = ({
           }
         );
         const resp = await respJson.json();
-        console.log(resp);
         getResults();
+        setShowResults(true);
       } catch (e) {
         throwToast("error", "Error Casting Vote");
       }
@@ -109,17 +111,22 @@ const PollOption = ({
         {label}
       </div>
       <div className="u-margin-bottom-tiny">
-        <ProgressBar
-          completed={value}
-          bgColor={"#1F6603"}
-          baseBgColor={"#DCC091"}
-          labelSize={"12px"}
-        />
+        {showResults ? (
+          <>
+            <ProgressBar
+              completed={value}
+              bgColor={"#1F6603"}
+              baseBgColor={"#DCC091"}
+              labelSize={"12px"}
+            />
+            <p>
+              {numVotes} Vote
+              {numVotes > 1 || numVotes == 0 ? <span>s</span> : <span></span>}
+            </p>
+          </>
+        ) : null}
       </div>
-      <p>
-        {numVotes} Vote
-        {numVotes > 1 || numVotes ==0  ? <span>s</span> : <span></span>}
-      </p>
+
       <ToastContainer />
     </div>
   );

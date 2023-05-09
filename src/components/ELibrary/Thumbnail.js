@@ -1,14 +1,34 @@
 import React from "react";
 import Button from "@mui/joy/Button";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
 
-const ThumbnailSec = ({id,document}) => {
+import { db } from "../../firebase";
+import { doc, updateDoc, arrayUnion, collection, getDocs,setDoc } from "firebase/firestore";
+import { throwToast } from "../../helpers/throwToast";
+import { ToastContainer } from "react-toastify";
+
+const Thumbnail = ({id,document, auth}) => {
   const navigate = useNavigate();
+
+  const addToFaves = async()=>{
+    try{
+      const docRef = doc(db, "favourites", auth.uid);
+      await updateDoc(docRef, {
+        elibrary:  arrayUnion(document)
+      })
+      throwToast("success", "Successfully added to favourites");
+      console.log(auth.uid);
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  
   return (
     <div className="thumbnail__container roww">
       <div className="thumbnail__date column">
@@ -24,30 +44,23 @@ const ThumbnailSec = ({id,document}) => {
         <div className="roww">
         <Button
           style={{ borderRadius: 50, marginRight: "10px" }}
-          onClick={() => {}}
-          variant="soft"
-          color="neutral"
-          sx={{color: "black"}}
+          startDecorator={<VisibilityIcon/>}
+          onClick={() => {
+            navigate(`/doc/${document.docID}`);
+          }}
         >
-          <VisibilityIcon/>
+          Article Details
         </Button>
         <Button
           style={{ borderRadius: 50, marginRight: "10px" }}
-          onClick={() => {navigate(`/editdoc/${document.docID}`)}}
+          onClick={() => {
+            addToFaves();
+          }}
           variant="soft"
-          color="neutral"
+          color="success"
           sx={{color: "black"}}
         >
-          <ModeEditIcon/>
-        </Button>
-
-        <Button
-          style={{ borderRadius: 50, marginRight: "10px" }}
-          onClick={() => {}}
-          variant="soft"
-          color="danger"
-        >
-          <DeleteIcon/>
+          <StarBorderIcon/>
         </Button>
         </div>
         
@@ -56,4 +69,13 @@ const ThumbnailSec = ({id,document}) => {
   );
 };
 
-export default ThumbnailSec;
+const mapStateToProps = (state) => ({
+  //this is the state in the store ///this will take the state from the store and put it as props in the component that is being connected
+  auth: state.auth,
+});
+
+
+export default connect(
+  mapStateToProps,
+
+)(Thumbnail);

@@ -77,9 +77,12 @@ const AccountPagePublicMember = (props) => {
 
   const getDocuments = async () => {
     try {
+
+
+      
       setIsLoading2(true);
-      const docRef = collection(db, "elibrary");
-      const q = query(docRef, where("posted_by", "==", props.auth.uid));
+      const collectionRef = collection(db, "elibrary");
+      const q = query(collectionRef, where("posted_by", "==", props.auth.uid));
       const querySnapshot = await getDocs(q);
       const docArr = [];
       querySnapshot.forEach((doc) => {

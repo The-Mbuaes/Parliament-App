@@ -18,6 +18,12 @@
     & img {
       width: 4rem;
     }
+
+    & p{
+      &:nth-child(3){
+      font-size: 12px;
+      }
+    }
   }
 
   &__question{
