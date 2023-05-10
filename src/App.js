@@ -26,6 +26,9 @@ import TestDoc from "./components/ELibrary/TestDoc";
 import ELHome from "./components/ELibrary/ELHome";
 import ParlPapers from "./components/ELibrary/ParlPapers";
 import AllDocs from "./components/ELibrary/AllDocs";
+import Favourites from "./components/Favourites/Favourites";
+import FaveDocs from "./components/Favourites/FaveDocs";
+import FavePolls from "./components/Favourites/FavePolls";
 
 
 const theme = extendTheme({
@@ -165,9 +168,13 @@ function App() {
           <Route path="/elibrary" element={<ELHome/>}/>
           <Route path="/elibrary/parlpapers" element={<ParlPapers/>}/>
           <Route path="/elibrary/docs/:doccat" element={<AllDocs/>}/>
+          <Route path="/favourites" element={<Favourites/>}/>
+          <Route path="/favourites/documents" element={<FaveDocs/>}/>
+          <Route path="/favourites/surveys" element={<FavePolls/>}/>
           <Route path="/psu">
-          <Route path=":type" element={<PSU/>} />
+             <Route path=":type" element={<PSU/>} />
           </Route>
+
         </Routes>
       </CssVarsProvider>
 
@@ -197,7 +204,7 @@ function App() {
         >
           <BottomNavigationAction label="Account" icon={<AccountCircleOutlinedIcon />} onClick={()=>{navigate("/account")}}/>
           <BottomNavigationAction label="Home" icon={<HomeOutlinedIcon />} onClick={()=>{navigate("/")}}/>
-          <BottomNavigationAction label="Favorites" icon={<StarBorderIcon />} onClick={()=>{navigate("/favorites")}}/>
+          <BottomNavigationAction label="Favorites" icon={<StarBorderIcon />} onClick={()=>{navigate("/favourites")}}/>
         </BottomNavigation>
     </AuthContextProvider>
   );

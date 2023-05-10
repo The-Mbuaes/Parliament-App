@@ -10,7 +10,8 @@ const TheNV = () => {
       <div className="center-hrz u-margin-bottom u-padding" style={{paddingTop: "20px"}}>
         <img src={Logo} alt="The Namibian Voice" className="img_nv" />
       </div>
-
+      
+      <div className="center-hrz">
       <div className="column u-padding">
         <Button
           endDecorator={<ChevronRightIcon />}
@@ -71,6 +72,8 @@ const TheNV = () => {
           Acts of Parliament
         </Button>
       </div>
+      </div>
+
     </div>
   );
 };

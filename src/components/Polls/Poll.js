@@ -59,7 +59,7 @@ const Poll = ({ data, auth }) => {
     <div className="poll__container u-margin-bottom-small">
       <div className="poll__header roww">
         <img src={Logo} alt="logo" />
-        <p> Parliament of Namibia</p>
+        <p> Parliament of Namibia </p>
         <p style={{ color: "#434343" }}>
           {" "}
           | {moment(pollData.created_at).fromNow()}
