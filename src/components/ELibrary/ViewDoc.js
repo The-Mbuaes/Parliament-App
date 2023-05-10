@@ -21,6 +21,10 @@ const ViewDoc = (props) => {
   },[]);
 
   const addToFaves = async()=>{
+    if(!props.auth){
+      throwToast("error", "Please sign in to add to favourites");
+      return;
+    }
     try{
       const docRef = doc(db, "favourites", props.auth.uid);
       await updateDoc(docRef, {

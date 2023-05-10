@@ -43,6 +43,10 @@ const Poll = ({ data, auth }) => {
     }
   };
   const addToFaves = async()=>{
+    if(!auth){
+      throwToast("error", "Please sign in to add to favourites");
+      return;
+    }
     try{
       const docRef = doc(db, "favourites", auth.uid);
       await updateDoc(docRef, {
