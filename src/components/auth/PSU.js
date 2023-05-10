@@ -12,14 +12,15 @@ const PSU = () => {
     <div className="fadein pagepadding">
       <div className="center-text u-margin-top u-margin-bottom-small">
         <p className="normal-light">
-          Please sign in as a
+          Please sign in 
           {type === "p_mem" ? (
-            <span> public member </span>
+            <span>as a public member </span>
           ) : type === "parl" ? (
-            <span> parliamentarian </span>
-          ) : (
-            <span> secretariat </span>
-          )}
+            <span>as a parliamentarian </span>
+          ) : type === "sec" ? (
+            <span>as a secretariat </span>
+          ) : <span> </span>
+        }
           to complete this action.
         </p>
       </div>

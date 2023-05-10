@@ -75,7 +75,7 @@ const AllDocs = () => {
       ) : (
         <>
           {docs.length > 0 ? docs.map((doc) => (
-            <Thumbnail id={doc.docID} document={doc} />
+            <Thumbnail id={doc.docID} document={doc} key={doc.docID}/>
           )): <p>No results :(</p>
         
         }
